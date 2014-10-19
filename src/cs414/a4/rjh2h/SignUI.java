@@ -2,20 +2,26 @@ package cs414.a4.rjh2h;
 
 import javax.swing.JFrame;
 
-public class EntrySign extends JFrame {
-
+public class SignUI extends JFrame {
+	
+	// Sign should observe ParkingGarage for changes in occupancy.
+	
+	private String title;
+	private String message;
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public EntrySign() {
+	public SignUI() {
 		initUI();
 	}
 	
     private void initUI() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-    	setTitle("Entry Sign");
+        title = "Entry Sign";
+        setTitle(title);
         setSize(200, 200);
         setLocationRelativeTo(null);
         setVisible(true);

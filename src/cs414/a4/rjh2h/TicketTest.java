@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class EntrySignTest {
+public class TicketTest extends Ticket {
 
 	@Before
 	public void setUp() throws Exception {
@@ -17,7 +17,7 @@ public class EntrySignTest {
 	}
 
 	@Test
-	public void testEntrySign() {
+	public void test() {
 		fail("Not yet implemented");
 	}
 
