@@ -22,6 +22,8 @@ public class SignUI extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         title = "Entry Sign";
         setTitle(title);
+        message = "Welcome to the Garage";
+        // add a jLabel with the message
         setSize(200, 200);
         setLocationRelativeTo(null);
         setVisible(true);
