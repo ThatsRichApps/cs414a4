@@ -14,7 +14,7 @@ public class ParkingGarage extends Observable implements Observer {
 	private double maxFee = hourlyFee * 24;
 	private boolean isOpen;
 	private int currentOccupancy;
-	private int maxOccupancy = 5;
+	private int maxOccupancy = 25;
 	private static GarageUI garageUI;
 	
 	public static void main(String[] args) {
@@ -36,14 +36,14 @@ public class ParkingGarage extends Observable implements Observer {
 		Sign entrySign = new Sign();
 		garage.addObserver(entrySign);
 		
-		garage.isOpen = true;
-		
-		garage.setChanged();
-		garage.notifyObservers(garage.isOpen);
-		
 		EntryKiosk entryKiosk = new EntryKiosk(garage);
+		garage.addObserver(entryKiosk);
 		
 		ExitKiosk exitKiosk = new ExitKiosk(garage);
+
+		garage.isOpen = true;
+		garage.setChanged();
+		garage.notifyObservers(garage.isOpen);
 		
 	}
 	
@@ -51,12 +51,22 @@ public class ParkingGarage extends Observable implements Observer {
 	public void update(Observable o, Object arg) {
 	    // update garage.occupancy and the garage.isOpen status as needed 
 		System.out.println("Update Garage:" + o + arg);
-		currentOccupancy++;
+		
+		if ((String)arg == "entry") {
+			currentOccupancy++;
+		} else if ((String)arg == "exit") {
+			currentOccupancy--;
+			if (currentOccupancy < 0 ) {currentOccupancy = 0;};
+		}
 		
 		garageUI.setMessage("Current Occupancy:" + currentOccupancy);
 		
-		if (currentOccupancy == maxOccupancy) {
+		if (currentOccupancy >= maxOccupancy) {
 			this.isOpen = false;		
+			this.setChanged();
+			this.notifyObservers(this.isOpen);
+		} else {
+			this.isOpen = true;		
 			this.setChanged();
 			this.notifyObservers(this.isOpen);
 		}

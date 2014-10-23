@@ -22,11 +22,28 @@ public class SignUITest {
 	public void testSign1() {
 
 		SignUI entrySign = new SignUI();
-	
-		
-//		assertEquals(entrySign.message == "Welcome to the Garage")
-		assertTrue(true);
+		entrySign.setMessage("test message");	
+		assertEquals("test message",entrySign.getMessage());
 	
 	}
 
+	@Test
+	public void testSign2() {
+
+		SignUI entrySign = new SignUI();
+		assertEquals("Welcome to the Garage",entrySign.getMessage());
+	
+	}
+	
+	@Test
+	public void testSign3() {
+
+		SignUI entrySign = new SignUI();
+		entrySign.setMessage(null);	
+		assertEquals(null,entrySign.getMessage());
+	
+	}
+
+	
+	
 }

@@ -7,17 +7,21 @@ public class Sign implements Observer {
 
 	private SignUI entrySignUI = new SignUI();
 	
-	
+	@Override
+	public String toString() {
+		return "Entry Sign Controller";
+	}
+
 	public void update(Observable o, Object arg) {
-	    System.out.println("Garage Changed: " + arg);
-	    
+	    // this updates the sign when the garage state changes
+		
 	    String garageState;
 	    boolean isOpen = (boolean) arg;
 	    
 	    if (isOpen == true) {
 	    	garageState = "Open";
 	    } else {
-	    	garageState = "Closed";
+	    	garageState = "Full";
 	    }
 	    	
 	    entrySignUI.setMessage("Garage is " + garageState);

@@ -8,9 +8,13 @@ public class SignUI extends JFrame {
 	
 	// Sign should observe ParkingGarage for changes in occupancy.
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8443698131673275729L;
 	private String title;
 	private String message;
-    JLabel messageLabel = new JLabel("Hello", SwingConstants.CENTER);
+    JLabel messageLabel = new JLabel("Welcome to the Garage", SwingConstants.CENTER);
 	
 	public String getMessage() {
 		return message;

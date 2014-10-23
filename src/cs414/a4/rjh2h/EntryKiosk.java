@@ -7,41 +7,55 @@ import java.util.Observer;
 
 public class EntryKiosk extends Observable implements Observer, ActionListener {
 
-	//private EntryKioskUI entryUI = new EntryKioskUI();
 	private EntryKioskUI entryUI;
 	private ParkingGarage garage;
+	private boolean isGarageOpen;
+	private Gate entryGate;
+	
+	public EntryKiosk() {
+	
+	}
 	
 	public EntryKiosk(ParkingGarage garage) {
 	
+		// set the garage as observer, notify as cars enter
 		this.garage = garage;
+		this.addObserver(garage);
+		
+		// create the entry ui and listen for it's button
 		entryUI = new EntryKioskUI();
 		entryUI.addButtonActionListener(this);
 		
-		this.addObserver(garage);
-		
+	}
+
+	@Override
+	public String toString() {
+		return "EntryKiosk";
 	}
 
 	public void update(Observable o, Object arg) {
-	    System.out.println("Garage Changed: " + arg);
-	    
-	    String garageState;
-	    boolean isOpen = (boolean) arg;
-	    
-	    if (isOpen == true) {
-	    	garageState = "Open";
+		// Entry observes the ParkingGarage.  If garage is closed, entry is not allowed.
+		
+	    isGarageOpen = (boolean) arg;
+	    if (isGarageOpen == true) {
+	    	entryUI.setMessage("Please Take Your Ticket");
 	    } else {
-	    	garageState = "Closed";
+	    	entryUI.setMessage("Garage is Full");
 	    }
-	    	
+
+	    entryUI.setButtonEnabled(isGarageOpen);
 	    
 	}
 	
 	public void actionPerformed(ActionEvent e) {
     
-		entryUI.setMessage("Pressed Enter Button");
-	
+		entryUI.setMessage("Thank You");
 		setChanged();
-		notifyObservers();
+		notifyObservers("entry");
+		
+		
+		
+		
 		
 	}
 	

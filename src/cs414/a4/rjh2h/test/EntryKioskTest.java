@@ -6,11 +6,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import cs414.a4.rjh2h.ExitKiosk;
+import cs414.a4.rjh2h.EntryKiosk;
 import cs414.a4.rjh2h.ParkingGarage;
 
-public class ExitKioskTest extends ExitKiosk {
+public class EntryKioskTest extends EntryKiosk {
 
+	
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -20,13 +21,13 @@ public class ExitKioskTest extends ExitKiosk {
 	}
 
 	@Test
-	public void testExitKiosk1() {
-
+	public void testEntryKiosk1() {
+	
 		ParkingGarage garageTest = new ParkingGarage();
 		
-		ExitKiosk exitKiosk = new ExitKiosk(garageTest);
-	
-		assertEquals("ExitKiosk", exitKiosk.toString());
+		EntryKiosk entryKiosk = new EntryKiosk(garageTest);
+		
+		assertEquals("EntryKiosk", entryKiosk.toString());
 	
 	}
 
