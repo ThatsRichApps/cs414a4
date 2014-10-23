@@ -11,8 +11,7 @@ public class ParkingGarage extends Observable {
 	private boolean isOpen;
 
 	public static void main(String[] args) {
-		
-		
+
 		ParkingGarage garage = new ParkingGarage();
 		
 		GarageUI garageUI = new GarageUI();
@@ -21,16 +20,21 @@ public class ParkingGarage extends Observable {
 		garage.addObserver(entrySign);
 		
 		garage.isOpen = true;
+		
+		garage.setChanged();
 		garage.notifyObservers(garage.isOpen);
 		
+		EntryKiosk entryKiosk = new EntryKiosk();
+		
+		
+		ExitKiosk exitKiosk = new ExitKiosk();
+		
+		
+		
+		
+		
+		
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

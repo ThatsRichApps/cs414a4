@@ -1,4 +1,4 @@
-package cs414.a4.rjh2h;
+package cs414.a4.rjh2h.test;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TicketTest extends Ticket {
+import cs414.a4.rjh2h.BillingAccount;
+
+public class BillingAccountTest extends BillingAccount {
 
 	@Before
 	public void setUp() throws Exception {

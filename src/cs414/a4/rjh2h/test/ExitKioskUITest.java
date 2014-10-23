@@ -1,4 +1,4 @@
-package cs414.a4.rjh2h;
+package cs414.a4.rjh2h.test;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ALPRTest extends ALPR {
+import cs414.a4.rjh2h.ExitKioskUI;
+
+public class ExitKioskUITest extends ExitKioskUI {
 
 	@Before
 	public void setUp() throws Exception {

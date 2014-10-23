@@ -1,18 +1,25 @@
 package cs414.a4.rjh2h;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class SignUI extends JFrame {
 	
 	// Sign should observe ParkingGarage for changes in occupancy.
-	
+
 	private String title;
 	private String message;
+    JLabel messageLabel = new JLabel("Hello", SwingConstants.CENTER);
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+		messageLabel.setText(message);
+	}
 
 	public SignUI() {
 		initUI();
@@ -24,6 +31,10 @@ public class SignUI extends JFrame {
         setTitle(title);
         message = "Welcome to the Garage";
         // add a jLabel with the message
+                
+        messageLabel.setText(message);
+        add(messageLabel);
+       
         setSize(200, 200);
         setLocationRelativeTo(null);
         setVisible(true);
