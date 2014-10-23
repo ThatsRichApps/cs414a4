@@ -26,6 +26,11 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 		entryUI = new EntryKioskUI();
 		entryUI.addButtonActionListener(this);
 		
+		// create the entry Gate and make sure it starts closed
+		entryGate = new Gate();
+		entryGate.closeGate();
+		
+		
 	}
 
 	@Override
@@ -49,9 +54,12 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
     
+		// first the driver presses the enter button, this creates a ticket
 		entryUI.setMessage("Thank You");
 		setChanged();
 		notifyObservers("entry");
+		
+		
 		
 		
 		

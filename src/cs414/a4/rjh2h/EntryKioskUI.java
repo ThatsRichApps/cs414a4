@@ -19,7 +19,9 @@ public class EntryKioskUI extends JFrame {	// Sign should observe ParkingGarage 
 	private String title;
 	private String message;
 	JLabel messageLabel = new JLabel("Welcome to the Garage", SwingConstants.CENTER);
-	JButton enterButton = new JButton("Dispense Ticket");
+	JButton enterButton = new JButton("Press to Enter Garage");
+	JButton dispenseTicketButton = new JButton ("Dispense Ticket");
+	JButton virtualTicketButton = new JButton ("Virtual Ticket");
 	
 	public EntryKioskUI() {
 		initUI();
@@ -41,18 +43,39 @@ public class EntryKioskUI extends JFrame {	// Sign should observe ParkingGarage 
 	
 	public void addButtonActionListener(ActionListener listener) {
 	    enterButton.addActionListener(listener);
+	
+	
+	
+	
 	}
 	
 	private void initUI() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	    title = "Entry Kiosk";
 	    setTitle(title);
-	    message = "Please Take Your Ticket";
+	    
+	    messageLabel = new JLabel("Welcome to the Garage", SwingConstants.CENTER);
+		enterButton = new JButton("Press to Enter Garage");
+		dispenseTicketButton = new JButton ("Dispense Ticket");
+		virtualTicketButton = new JButton ("Virtual Ticket");
+		
+		
+	    message = "Press Top Button to Enter";
 	    messageLabel.setText(message);
-	        
-        JPanel pane = new JPanel(new GridLayout(0, 1));
+	
+	    
+	    
+	    
+	    
+	    
+	    
+        JPanel pane = new JPanel(new GridLayout(4, 0));
         pane.add(enterButton);
+        pane.add(dispenseTicketButton);
+        pane.add(virtualTicketButton);
+        
         pane.add(messageLabel);
+        
         pane.setBorder(BorderFactory.createEmptyBorder(
                                         30, //top
                                         30, //left
