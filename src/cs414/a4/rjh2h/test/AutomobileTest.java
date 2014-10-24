@@ -19,8 +19,12 @@ public class AutomobileTest extends Automobile {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testAutomobile() {
+
+		Automobile autoTest = new Automobile();
+		
+		assertTrue(autoTest.getLicensePlateNumber().length() == 7);
+	
 	}
 
 }

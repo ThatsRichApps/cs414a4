@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 
+import cs414.a4.rjh2h.ui.ExitKioskUI;
+
 public class ExitKiosk extends Observable implements ActionListener {
 
 	// Parking Garage observes ExitKiosk to know when cars leave

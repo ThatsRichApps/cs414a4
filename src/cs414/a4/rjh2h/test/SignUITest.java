@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import cs414.a4.rjh2h.SignUI;
+import cs414.a4.rjh2h.ui.SignUI;
 
 public class SignUITest {
 

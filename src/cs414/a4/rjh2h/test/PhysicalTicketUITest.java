@@ -6,9 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import cs414.a4.rjh2h.ui.ExitKioskUI;
+import cs414.a4.rjh2h.ui.PhysicalTicketUI;
 
-public class ExitKioskUITest extends ExitKioskUI {
+public class PhysicalTicketUITest extends PhysicalTicketUI {
 
 	@Before
 	public void setUp() throws Exception {

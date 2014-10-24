@@ -1,4 +1,4 @@
-package cs414.a4.rjh2h;
+package cs414.a4.rjh2h.ui;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;

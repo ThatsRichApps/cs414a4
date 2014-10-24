@@ -1,10 +1,11 @@
 package cs414.a4.rjh2h;
 
-public class Gate {
+import java.util.Observable;
+
+public class Gate extends Observable {
 	
 	private boolean isOpen;
 	private boolean carSensor;
-
 	
 	public Gate() {
 		super();

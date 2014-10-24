@@ -1,7 +1,11 @@
 package cs414.a4.rjh2h;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+
+import cs414.a4.rjh2h.ui.GarageUI;
 
 public class ParkingGarage extends Observable implements Observer {
 	
@@ -17,37 +21,38 @@ public class ParkingGarage extends Observable implements Observer {
 	private int maxOccupancy = 25;
 	private static GarageUI garageUI;
 	
+	private HashMap<String, Ticket> virtualTicketMap = new HashMap<String, Ticket>();
+	private HashMap<Integer, Ticket> physicalTicketMap = new HashMap<Integer, Ticket>();
+	
 	public static void main(String[] args) {
 		
-		ParkingGarage garage = new ParkingGarage();
 		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 	    
+				ParkingGarage garage = new ParkingGarage();
+				
 				// create the gui here
 				garageUI = new GarageUI();
+
+				Sign entrySign = new Sign();
+				garage.addObserver(entrySign);
 				
+				EntryKiosk entryKiosk = new EntryKiosk(garage);
+				garage.addObserver(entryKiosk);
+				
+				ExitKiosk exitKiosk = new ExitKiosk(garage);
+
+				garage.isOpen = true;
+				garage.setChanged();
+				garage.notifyObservers(garage.isOpen);
 				
 			}
 		});
-				
-		//GarageUI garageUI = new GarageUI();
-		
-		Sign entrySign = new Sign();
-		garage.addObserver(entrySign);
-		
-		EntryKiosk entryKiosk = new EntryKiosk(garage);
-		garage.addObserver(entryKiosk);
-		
-		ExitKiosk exitKiosk = new ExitKiosk(garage);
-
-		garage.isOpen = true;
-		garage.setChanged();
-		garage.notifyObservers(garage.isOpen);
 		
 	}
 	
-	
+
 	public void update(Observable o, Object arg) {
 	    // update garage.occupancy and the garage.isOpen status as needed 
 		System.out.println("Update Garage:" + o + arg);
@@ -65,17 +70,35 @@ public class ParkingGarage extends Observable implements Observer {
 			this.isOpen = false;		
 			this.setChanged();
 			this.notifyObservers(this.isOpen);
-		} else {
+		} else if (this.isOpen == false) {
 			this.isOpen = true;		
 			this.setChanged();
 			this.notifyObservers(this.isOpen);
 		}
 		
 	}
-	
-	
-	
-	
-	
 
+	public void addVirtualTicket(Ticket ticket) {
+		
+		String key = ticket.getAutomobile().getLicenseStateCode() + " - " +
+				ticket.getAutomobile().getLicensePlateNumber();
+		
+		virtualTicketMap.put(key, ticket);
+		
+	}
+	
+	public void addPhysicalTicket(Ticket ticket) {
+		
+		int key = ticket.getTicketNumber();
+		
+		physicalTicketMap.put(key, ticket);
+		
+	}
+
+	
+	
+	
+	
+	
+	
 }

@@ -3,6 +3,8 @@ package cs414.a4.rjh2h;
 import java.util.Observable;
 import java.util.Observer;
 
+import cs414.a4.rjh2h.ui.SignUI;
+
 public class Sign implements Observer {
 
 	private SignUI entrySignUI = new SignUI();

@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import cs414.a4.rjh2h.EntryKioskUI;
+import cs414.a4.rjh2h.ui.EntryKioskUI;
 
 public class EntryKioskUITest extends EntryKioskUI {
 

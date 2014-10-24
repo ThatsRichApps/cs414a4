@@ -2,8 +2,16 @@ package cs414.a4.rjh2h;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.text.DateFormatter;
+
+import cs414.a4.rjh2h.ui.EntryKioskUI;
+import cs414.a4.rjh2h.ui.PhysicalTicketUI;
 
 public class EntryKiosk extends Observable implements Observer, ActionListener {
 
@@ -11,6 +19,9 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 	private ParkingGarage garage;
 	private boolean isGarageOpen;
 	private Gate entryGate;
+	private Ticket currentTicket;
+	private int ticketNumber = 0; 
+	
 	
 	public EntryKiosk() {
 	
@@ -43,27 +54,78 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 		
 	    isGarageOpen = (boolean) arg;
 	    if (isGarageOpen == true) {
-	    	entryUI.setMessage("Please Take Your Ticket");
+	    	entryUI.setMessage1("Press Top Button to Enter");
+	    	entryUI.setMessage2("");
 	    } else {
-	    	entryUI.setMessage("Garage is Full");
+	    	entryUI.setMessage1("Garage is Full");
+	    	entryUI.setMessage2("");
 	    }
 
-	    entryUI.setButtonEnabled(isGarageOpen);
+	    entryUI.enableEnterButton(isGarageOpen);
 	    
 	}
 	
 	public void actionPerformed(ActionEvent e) {
     
-		// first the driver presses the enter button, this creates a ticket
-		entryUI.setMessage("Thank You");
-		setChanged();
-		notifyObservers("entry");
+		String cmd = e.getActionCommand();
+	    
+		switch (cmd) {
 		
+		case "EnterButton": 
+			
+			// first the driver presses the enter button, this creates a ticket
+			ticketNumber++;
+			currentTicket = new Ticket(ticketNumber);
+			
+			Date timeIn = currentTicket.getTimeIn();
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("MMM yyyy HH:mm z");
+
+			String dateOut = dateFormatter.format(timeIn);
+
+			String entryMessage = "Time is " + dateOut;
+			
+			
+			String entryMessage2 = " License: " + 
+					currentTicket.getAutomobile().getLicensePlateNumber() + " State: " + 
+					currentTicket.getAutomobile().getLicenseStateCode();
+			
+			entryUI.setMessage1(entryMessage);
+			entryUI.setMessage2(entryMessage2);
+			
+			entryUI.enableTicketButtons(true);
+			entryUI.enableEnterButton(false);
+			
+			break;
+			
+		case "DispenseTicketButton":
+
+			entryUI.enableTicketButtons(false);
+			entryUI.enableEnterButton(true);
+
+			PhysicalTicketUI printedTicket = new PhysicalTicketUI(currentTicket);	
+			
+			garage.addPhysicalTicket(currentTicket);
+			
+			setChanged();
+			notifyObservers("entry");
+
+			break;
+			
+		case "VirtualTicketButton":
+
+			entryUI.enableTicketButtons(false);
+			entryUI.enableEnterButton(true);
+
+			garage.addVirtualTicket(currentTicket);
+			
+			setChanged();
+			notifyObservers("entry");
+
+			break;
+			
 		
-		
-		
-		
-		
+		}
+			
 		
 	}
 	

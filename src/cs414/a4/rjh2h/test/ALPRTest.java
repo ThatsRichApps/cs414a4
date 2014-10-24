@@ -19,8 +19,13 @@ public class ALPRTest extends ALPR {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testALPR1() {
+
+		ALPR testALPR = new ALPR();
+		
+		assertEquals("CO", testALPR.getStateCode());
+		//assertEquals("AAA", testALPR.getLicenseNumber());
+		
 	}
 
 }
