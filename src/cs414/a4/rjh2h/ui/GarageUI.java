@@ -7,7 +7,7 @@ import javax.swing.SwingConstants;
 public class GarageUI extends JFrame {
 
 	private String message;
-    JLabel messageLabel = new JLabel("", SwingConstants.CENTER);
+    JLabel messageLabel;
 	
 	public GarageUI (){		
 		initUI();
@@ -23,7 +23,8 @@ public class GarageUI extends JFrame {
     	setTitle("Parking Garage");
     	
     	message = "Current Occupancy: 0";
-        messageLabel.setText(message);
+        messageLabel = new JLabel(message, SwingConstants.CENTER);
+        
         add(messageLabel);
        
         setSize(400, 400);

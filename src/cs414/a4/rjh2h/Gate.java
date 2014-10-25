@@ -18,18 +18,21 @@ public class Gate extends Observable {
 
 	public void openGate() {
 		this.isOpen = true;
+		setChanged();
+		notifyObservers("GateOpen");
 	}
 	
 	public void closeGate() {
-		waitForCar();
 		this.isOpen = false;
+		setChanged();
+		notifyObservers("GateClosed");
 	}
 	
 	public void openGateForCar () {
 		// opens the gate, waits for the car, closes the gate
-		this.isOpen = true;
+		openGate();
 		waitForCar();
-		this.isOpen = false;
+		closeGate();
 	}
 	
 	private void waitForCar() {

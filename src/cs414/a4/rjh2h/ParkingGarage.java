@@ -1,7 +1,6 @@
 package cs414.a4.rjh2h;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,51 +11,67 @@ public class ParkingGarage extends Observable implements Observer {
 	// Parking Garage occupancy is observable.  Also, the garage observes the entryKiosk
 	// in order to know when cars are entering
 	
-	// initialize all the variables from the Glossary here
-	private double gracePeriod = 60;
-	private double hourlyFee = 2.00;
-	private double maxFee = hourlyFee * 24;
 	private boolean isOpen;
 	private int currentOccupancy;
-	private int maxOccupancy = 25;
-	private static GarageUI garageUI;
+	private GarageUI garageUI;
+	private SystemPreferences systemPreferences;
 	
-	private HashMap<String, Ticket> virtualTicketMap = new HashMap<String, Ticket>();
-	private HashMap<Integer, Ticket> physicalTicketMap = new HashMap<Integer, Ticket>();
+	private DataStorage dataStorage;
 	
-	public static void main(String[] args) {
-		
-		
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-	    
-				ParkingGarage garage = new ParkingGarage();
-				
-				// create the gui here
-				garageUI = new GarageUI();
+	//private HashMap<String, Ticket> virtualTicketMap = new HashMap<String, Ticket>();
+	//private HashMap<Integer, Ticket> physicalTicketMap = new HashMap<Integer, Ticket>();
 
-				Sign entrySign = new Sign();
-				garage.addObserver(entrySign);
-				
-				EntryKiosk entryKiosk = new EntryKiosk(garage);
-				garage.addObserver(entryKiosk);
-				
-				ExitKiosk exitKiosk = new ExitKiosk(garage);
+	public ParkingGarage() {
+		super();
+		
+		// create the main gui here
+		garageUI = new GarageUI();
+		systemPreferences = new SystemPreferences();
+		dataStorage = new DataStorage();
 
-				garage.isOpen = true;
-				garage.setChanged();
-				garage.notifyObservers(garage.isOpen);
-				
-			}
-		});
+		Sign entrySign = new Sign();
+		this.addObserver(entrySign);
+		
+		EntryKiosk entryKiosk = new EntryKiosk(this);
+		this.addObserver(entryKiosk);
+		
+		ExitKiosk exitKiosk = new ExitKiosk(this);
+		
+		currentOccupancy = 0;
 		
 	}
 	
+	public boolean isOpen() {
+		return isOpen;
+	}
+
+	public void setOpen(boolean isOpen) {
+		this.isOpen = isOpen;
+		setChanged();
+		notifyObservers(isOpen);
+	}
+
+	
+	public DataStorage getDataStorage() {
+		return dataStorage;
+	}
+
+	public void setDataStorage(DataStorage dataStorage) {
+		this.dataStorage = dataStorage;
+	}
+
+	public SystemPreferences getSystemPreferences() {
+		return systemPreferences;
+	}
+
+	public void setSystemPreferences(SystemPreferences systemPreferences) {
+		this.systemPreferences = systemPreferences;
+	}
 
 	public void update(Observable o, Object arg) {
 	    // update garage.occupancy and the garage.isOpen status as needed 
-		System.out.println("Update Garage:" + o + arg);
-		
+		// the garage observes both the entry and exit in order to 
+		// keep occupancy correct
 		if ((String)arg == "entry") {
 			currentOccupancy++;
 		} else if ((String)arg == "exit") {
@@ -64,9 +79,15 @@ public class ParkingGarage extends Observable implements Observer {
 			if (currentOccupancy < 0 ) {currentOccupancy = 0;};
 		}
 		
+		// update the occupancy of the garage ui view
 		garageUI.setMessage("Current Occupancy:" + currentOccupancy);
+
+		Date timeNow = new Date();
+		dataStorage.updateOccupancyData(timeNow, currentOccupancy);
 		
-		if (currentOccupancy >= maxOccupancy) {
+		// If the garage reaches max occupancy, close it down by 
+		// notifying the sign and the entryKiosk
+		if (currentOccupancy >= systemPreferences.getMaxOccupancy()) {
 			this.isOpen = false;		
 			this.setChanged();
 			this.notifyObservers(this.isOpen);
@@ -80,25 +101,24 @@ public class ParkingGarage extends Observable implements Observer {
 
 	public void addVirtualTicket(Ticket ticket) {
 		
-		String key = ticket.getAutomobile().getLicenseStateCode() + " - " +
-				ticket.getAutomobile().getLicensePlateNumber();
-		
-		virtualTicketMap.put(key, ticket);
-		
+		dataStorage.addVirtualTicket(ticket);
+			
 	}
 	
 	public void addPhysicalTicket(Ticket ticket) {
 		
-		int key = ticket.getTicketNumber();
-		
-		physicalTicketMap.put(key, ticket);
+		dataStorage.addPhysicalTicket(ticket);
 		
 	}
 
-	
-	
+	public Ticket getTicketNumber (int ticketNumber) {
+		
+		return dataStorage.getTicketNumber(ticketNumber);
+		
+	}
 	
 	
 	
 	
 }
+

@@ -27,6 +27,8 @@ public class EntryKioskUI extends JFrame {
 	private JButton dispenseTicketButton;
 	private JButton virtualTicketButton;
 	
+	private JLabel gateStatusLabel;
+	
 	public EntryKioskUI() {
 		initUI();
 	}
@@ -46,7 +48,14 @@ public class EntryKioskUI extends JFrame {
 		messageLabel2.setText(message);
 	}
 	
-	
+	public void setGateStatus (boolean isOpen) {
+		if (isOpen) {
+			this.gateStatusLabel.setText("Gate is Open");
+			System.out.println("set text open of status label");
+		} else {
+			gateStatusLabel.setText("Gate is Closed");
+		}
+	}
 	
 	public void enableEnterButton(boolean buttonEnabled) {
 		enterButton.setEnabled(buttonEnabled);
@@ -89,14 +98,17 @@ public class EntryKioskUI extends JFrame {
 		enterButton.setActionCommand("EnterButton");
 		dispenseTicketButton.setActionCommand("DispenseTicketButton");
 		virtualTicketButton.setActionCommand("VirtualTicketButton");
-	    
-        JPanel pane = new JPanel(new GridLayout(5, 0));
+		
+		gateStatusLabel = new JLabel("", SwingConstants.CENTER);
+		
+        JPanel pane = new JPanel(new GridLayout(6, 0));
         pane.add(enterButton);
         pane.add(dispenseTicketButton);
         pane.add(virtualTicketButton);
         
         pane.add(messageLabel1);
         pane.add(messageLabel2);
+        pane.add(gateStatusLabel);
         
         pane.setBorder(BorderFactory.createEmptyBorder(
                                         30, //top

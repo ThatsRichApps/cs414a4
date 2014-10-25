@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 
 import cs414.a4.rjh2h.ui.ExitKioskUI;
+import cs414.a4.rjh2h.ui.RegisterUI;
 
 public class ExitKiosk extends Observable implements ActionListener {
 
@@ -12,6 +13,7 @@ public class ExitKiosk extends Observable implements ActionListener {
 	
 	private ExitKioskUI exitUI;
 	private ParkingGarage garage;
+	private RegisterUI registerUI;
 	
 	public ExitKiosk() {
 		
@@ -26,6 +28,11 @@ public class ExitKiosk extends Observable implements ActionListener {
 		exitUI = new ExitKioskUI();
 		exitUI.addButtonActionListener(this);
 		
+		// create a registerUI to go with this too
+		
+		
+		registerUI = new RegisterUI();
+			
 	}
 	
 
@@ -34,11 +41,37 @@ public class ExitKiosk extends Observable implements ActionListener {
 		return "ExitKiosk";
 	}
 
-	public void actionPerformed(ActionEvent e) {
-    
+	public void actionPerformed(ActionEvent event) {
+		
+		String eventName = event.getActionCommand();
+		
+		//System.out.println("Event triggered:" + eventName);
+		//System.out.println("Ticket Number:" + ticketNumber);
+		
+		int ticketNumber = exitUI.getTicketNumber();
+		
 		exitUI.setMessage("Pressed Exit Button");
-		setChanged();
-		notifyObservers("exit");
+		
+		Ticket thisTicket = garage.getTicketNumber(ticketNumber);
+		
+		if (thisTicket == null) {
+			// handle ticket not found
+			exitUI.setMessage("Ticket Not Found");
+			
+		} else {
+		
+			//System.out.println("TimeIn for:" + ticketNumber + ":" + thisTicket.getTimeIn());
+			
+			Transaction transaction = new Transaction(thisTicket);
+			
+			//System.out.println("TimeOut:" + transaction.getTimeOut());
+			//System.out.println("You owe:" + transaction.getAmount());
+			
+			exitUI.setBottomMessage("You owe: $" + transaction.getAmount());
+			
+			setChanged();
+			notifyObservers("exit");
+		}
 		
 	}
 	

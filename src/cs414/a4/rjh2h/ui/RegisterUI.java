@@ -2,25 +2,23 @@ package cs414.a4.rjh2h.ui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class ExitKioskUI extends JFrame {
+public class RegisterUI extends JFrame {
 
 	private String title;
-	private String message;
-    private JLabel messageLabel;
-    private JButton exitButton;
+
+	private JButton exitButton;
     private JFormattedTextField enterTicketField;
     
     private String topMessage;
@@ -29,25 +27,26 @@ public class ExitKioskUI extends JFrame {
     private String bottomMessage;
     private JLabel bottomMessageLabel;
     
-	public ExitKioskUI() {
-		initUI();
-	}
+    private JDialog loginDialog;
+    
+    public RegisterUI () {
+    	
+    	initUI();
+    }
+    
 	
     private void initUI() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        title = "Exit Kiosk";
+        title = "Cash Register";
         setTitle(title);
-        
-        message = "Enter Ticket Number";
-        messageLabel = new JLabel(message, SwingConstants.CENTER);
         
         topMessage = "Top Message";
         topMessageLabel = new JLabel(topMessage, SwingConstants.CENTER);
         
-        bottomMessage = "";
+        bottomMessage = "Bottom Message";
         bottomMessageLabel = new JLabel(bottomMessage, SwingConstants.CENTER);
         
-        exitButton = new JButton("Exit Garage");
+        exitButton = new JButton("Payment");
         
         JPanel pane = new JPanel(new GridLayout(5, 1));
         
@@ -56,7 +55,7 @@ public class ExitKioskUI extends JFrame {
         enterTicketField.setFocusLostBehavior(JFormattedTextField.PERSIST);
         enterTicketField.setActionCommand("TicketField");
         
-        enterTicketField.setText("1");
+        enterTicketField.setText("0");
         
         try {
 			enterTicketField.commitEdit();
@@ -68,7 +67,6 @@ public class ExitKioskUI extends JFrame {
         pane.add(topMessageLabel);
         pane.add(enterTicketField);
         pane.add(exitButton);
-        pane.add(messageLabel);
         pane.add(bottomMessageLabel);
         
         pane.setBorder(BorderFactory.createEmptyBorder(
@@ -86,34 +84,9 @@ public class ExitKioskUI extends JFrame {
         setVisible(true);
     }
 	
-	public void setMessage(String message) {
-		this.message = message;
-		messageLabel.setText(message);
+	public void setTopMessage(String message) {
+		this.topMessage = message;
+		topMessageLabel.setText(message);
 	}
 
-	public void setBottomMessage(String message) {
-		this.bottomMessage = message;
-		bottomMessageLabel.setText(message);
-	}
-	
-
-	public int getTicketNumber () {
-		
-		int ticketNumber = Integer.parseInt(enterTicketField.getText());
-		
-		return ticketNumber;
-		
-	}
-
-	
-	public void addButtonActionListener(ActionListener listener) {
-	    exitButton.addActionListener(listener);
-	}
-	
-	public void addTicketFieldActionListener(ActionListener listener) {
-	    enterTicketField.addActionListener(listener);
-	}
-
-	
-	
 }

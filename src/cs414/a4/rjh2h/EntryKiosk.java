@@ -2,6 +2,7 @@ package cs414.a4.rjh2h;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,6 +42,9 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 		entryGate = new Gate();
 		entryGate.closeGate();
 		
+		entryUI.setGateStatus(true);
+		
+		entryGate.addObserver(this);
 		
 	}
 
@@ -52,17 +56,27 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 	public void update(Observable o, Object arg) {
 		// Entry observes the ParkingGarage.  If garage is closed, entry is not allowed.
 		
-	    isGarageOpen = (boolean) arg;
-	    if (isGarageOpen == true) {
-	    	entryUI.setMessage1("Press Top Button to Enter");
-	    	entryUI.setMessage2("");
-	    } else {
-	    	entryUI.setMessage1("Garage is Full");
-	    	entryUI.setMessage2("");
-	    }
-
-	    entryUI.enableEnterButton(isGarageOpen);
-	    
+		System.out.println("Update called:" + o + ":" + arg);
+		
+		if (arg == "GateOpen") {
+			entryUI.setGateStatus(true);
+			System.out.println("set gate status open");
+			
+		} else if (arg == "GateClosed") {
+			entryUI.setGateStatus(false);
+		} else {
+		    isGarageOpen = (boolean) arg;
+		    if (isGarageOpen == true) {
+		    	entryUI.setMessage1("Press Top Button to Enter");
+		    	entryUI.setMessage2("");
+		    } else {
+		    	entryUI.setMessage1("Garage is Full");
+		    	entryUI.setMessage2("");
+		    }
+	
+		    entryUI.enableEnterButton(isGarageOpen);
+		}
+		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -75,7 +89,12 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 			
 			// first the driver presses the enter button, this creates a ticket
 			ticketNumber++;
-			currentTicket = new Ticket(ticketNumber);
+			
+			// if the rate changes, this driver only has to pay the rate at the time
+			// that the ticket is tendered, therefore, we store this on / with the ticket
+			BigDecimal currentRate = garage.getSystemPreferences().getHourlyFee();
+			
+			currentTicket = new Ticket(ticketNumber, currentRate);
 			
 			Date timeIn = currentTicket.getTimeIn();
 			SimpleDateFormat dateFormatter = new SimpleDateFormat("MMM yyyy HH:mm z");
@@ -106,8 +125,13 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 			
 			garage.addPhysicalTicket(currentTicket);
 			
+			entryUI.setMessage1("Press Top Button to Enter");
+	    	entryUI.setMessage2("");
+	    	
 			setChanged();
 			notifyObservers("entry");
+			
+			entryGate.openGateForCar();
 
 			break;
 			
@@ -117,9 +141,14 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 			entryUI.enableEnterButton(true);
 
 			garage.addVirtualTicket(currentTicket);
-			
+		
+			entryUI.setMessage1("Press Top Button to Enter");
+	    	entryUI.setMessage2("");
+	    	
 			setChanged();
 			notifyObservers("entry");
+
+			entryGate.openGateForCar();
 
 			break;
 			
