@@ -3,6 +3,8 @@ package cs414.a4.rjh2h.ui;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
@@ -28,11 +30,14 @@ public class ExitKioskUI extends JFrame {
     private String topMessage;
     private JLabel topMessageLabel;
     
-    private String bottomMessage;
-    private JLabel bottomMessageLabel;
+    private JLabel paymentMessageLabel;
     
     private JLabel gateStatusLabel;
 	
+    private JButton payCashButton;
+    private JButton payOnAccountButton;
+    
+    private JFormattedTextField creditCardField;
     
 	public ExitKioskUI() {
 		initUI();
@@ -49,13 +54,12 @@ public class ExitKioskUI extends JFrame {
         topMessage = "Enter Ticket Num or License Plate";
         topMessageLabel = new JLabel(topMessage, SwingConstants.CENTER);
         
-        bottomMessage = "";
-        bottomMessageLabel = new JLabel(bottomMessage, SwingConstants.CENTER);
+        paymentMessageLabel = new JLabel("", SwingConstants.CENTER);
         
         exitButton = new JButton("Determine Fees");
         exitButton.setActionCommand("DetermineFees");
         
-        JPanel pane = new JPanel(new GridLayout(7, 1));
+        JPanel pane = new JPanel(new GridLayout(9, 1));
         
         // create enter ticket field with integer as input   
         enterTicketField = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -69,12 +73,37 @@ public class ExitKioskUI extends JFrame {
 			// catch block
 			e.printStackTrace();
 		}
-    
+        
+        
+        payCashButton = new JButton("Pay by Cash");
+        payCashButton.setActionCommand("PayCash");
+        
+        payOnAccountButton = new JButton("Pay on Account");
+        payOnAccountButton.setActionCommand("PayOnAccount");
+        
+        creditCardField = new JFormattedTextField(createFormatter("#### #### #### ####"));
+        creditCardField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
+        creditCardField.setActionCommand("CreditCardField");
+        creditCardField.setText("1111 1111 1111 11111");
+        
         // create enter license plate field   
         licensePlateField = new JFormattedTextField(createFormatter("UU-UUU-###"));
         licensePlateField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
         licensePlateField.setActionCommand("LicenseField");
         licensePlateField.setText("CO-AAA-111");
+        
+        licensePlateField.addFocusListener(new FocusListener(){
+            @Override
+            public void focusGained(FocusEvent e){
+                licensePlateField.setText("");
+            }
+            
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+        });
         
         gateStatusLabel = new JLabel("Gate is Closed", SwingConstants.CENTER);
 		
@@ -83,7 +112,12 @@ public class ExitKioskUI extends JFrame {
         pane.add(licensePlateField);
         //pane.add(exitButton);
         pane.add(messageLabel);
-        pane.add(bottomMessageLabel);
+
+        pane.add(paymentMessageLabel);
+        pane.add(creditCardField);
+        pane.add(payOnAccountButton);
+        pane.add(payCashButton);
+        
         pane.add(gateStatusLabel);
         
         pane.setBorder(BorderFactory.createEmptyBorder(
@@ -117,9 +151,8 @@ public class ExitKioskUI extends JFrame {
 		messageLabel.setText(message);
 	}
 
-	public void setBottomMessage(String message) {
-		this.bottomMessage = message;
-		bottomMessageLabel.setText(message);
+	public void setPaymentMessage(String message) {
+		paymentMessageLabel.setText(message);
 	}
 
 	public int getTicketNumber () {

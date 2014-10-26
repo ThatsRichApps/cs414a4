@@ -2,20 +2,13 @@ package cs414.a4.rjh2h.test;
 
 import static org.junit.Assert.*;
 
-import java.math.BigDecimal;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import cs414.a4.rjh2h.Ticket;
+import cs414.a4.rjh2h.SysAdminHandler;
 
-public class TicketTest extends Ticket {
-
-	public TicketTest(int ticketNumber, BigDecimal rate) {
-		super(ticketNumber, rate);
-		// TODO Auto-generated constructor stub
-	}
+public class SysAdminHandlerTest extends SysAdminHandler {
 
 	@Before
 	public void setUp() throws Exception {

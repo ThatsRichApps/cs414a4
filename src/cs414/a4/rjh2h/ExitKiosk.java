@@ -6,7 +6,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import cs414.a4.rjh2h.ui.ExitKioskUI;
-import cs414.a4.rjh2h.ui.RegisterUI;
 
 public class ExitKiosk extends Observable implements Observer,ActionListener {
 
@@ -14,7 +13,7 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 	
 	private ExitKioskUI exitUI;
 	private ParkingGarage garage;
-	private RegisterUI registerUI;
+	//private RegisterUI registerUI;
 	private Gate exitGate;
 	
 	public ExitKiosk() {
@@ -39,8 +38,8 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 		exitGate.closeGate();
 		
 		// create a cash register ui for taking payments
-		registerUI = new RegisterUI();
-			
+		//registerUI = new RegisterUI();
+				
 	}
 	
 
@@ -57,35 +56,34 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 		
 		Ticket thisTicket = null;
 		
+		String message = "";
+		
 		switch (eventName) {
 		
 		case "DetermineFees":
 			exitUI.setMessage("Determine Fees");
-
 			break;
 		case "LicenseField":
-			exitUI.setMessage("License field");
-
 			String licensePlate = exitUI.getLicensePlate();
 			thisTicket = garage.getTicketForLicensePlate(licensePlate);
-			
+			message = "Fee set by License: " + licensePlate;
 			break;
 		case "TicketField":
-			exitUI.setMessage("Ticket Num");
 			int ticketNumber = exitUI.getTicketNumber();
 			thisTicket = garage.getTicketNumber(ticketNumber);
-
+			message = "Fee set by Ticket: " + ticketNumber;
 			break;
 		}
 		
 		if (thisTicket == null) {
 			// handle ticket not found
 			exitUI.setMessage("Ticket Not Found");
-			exitUI.setBottomMessage("");
+			exitUI.setPaymentMessage("");
 		} else {
-		
+
+			exitUI.setMessage(message);
 			Transaction transaction = new Transaction(thisTicket);
-			exitUI.setBottomMessage("You owe: $" + transaction.getAmount());
+			exitUI.setPaymentMessage("You owe: $" + transaction.getAmount());
 			setChanged();
 			notifyObservers("exit");
 

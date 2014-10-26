@@ -29,6 +29,7 @@ public class RegisterUI extends JFrame {
     
     private JDialog loginDialog;
     
+    
     public RegisterUI () {
     	
     	initUI();
@@ -40,10 +41,10 @@ public class RegisterUI extends JFrame {
         title = "Cash Register";
         setTitle(title);
         
-        topMessage = "Top Message";
+        topMessage = "";
         topMessageLabel = new JLabel(topMessage, SwingConstants.CENTER);
         
-        bottomMessage = "Bottom Message";
+        bottomMessage = "";
         bottomMessageLabel = new JLabel(bottomMessage, SwingConstants.CENTER);
         
         exitButton = new JButton("Payment");
