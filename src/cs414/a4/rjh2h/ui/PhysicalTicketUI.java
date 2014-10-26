@@ -14,6 +14,8 @@ import cs414.a4.rjh2h.Ticket;
 
 public class PhysicalTicketUI extends JFrame {
 
+	private static final long serialVersionUID = -7528681233196221855L;
+
 	public PhysicalTicketUI(Ticket thisTicket) {
 	
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -31,10 +33,15 @@ public class PhysicalTicketUI extends JFrame {
         
         JPanel pane = new JPanel(new GridLayout(5, 0));
         
+        String message3 = "Rate per Hour: " + thisTicket.getRate();          
+        JLabel messageLabel3 = new JLabel(message3, SwingConstants.CENTER);
+        
+        
+        
         
         pane.add(messageLabel);
         pane.add(messageLabel2);
-
+        pane.add(messageLabel3);
         
         pane.setBorder(BorderFactory.createEmptyBorder(
                                         30, //top

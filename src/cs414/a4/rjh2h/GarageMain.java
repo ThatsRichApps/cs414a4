@@ -1,6 +1,5 @@
 package cs414.a4.rjh2h;
 
-import cs414.a4.rjh2h.ui.GarageUI;
 
 public class GarageMain {
 	

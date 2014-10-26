@@ -3,17 +3,19 @@ package cs414.a4.rjh2h;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
+import java.util.Observer;
 
 import cs414.a4.rjh2h.ui.ExitKioskUI;
 import cs414.a4.rjh2h.ui.RegisterUI;
 
-public class ExitKiosk extends Observable implements ActionListener {
+public class ExitKiosk extends Observable implements Observer,ActionListener {
 
 	// Parking Garage observes ExitKiosk to know when cars leave
 	
 	private ExitKioskUI exitUI;
 	private ParkingGarage garage;
 	private RegisterUI registerUI;
+	private Gate exitGate;
 	
 	public ExitKiosk() {
 		
@@ -24,13 +26,19 @@ public class ExitKiosk extends Observable implements ActionListener {
 		this.garage = garage;
 		this.addObserver(garage);
 		
-		// create the exit kiosk UI and listen for button press
+		// create the exit kiosk UI and listen for actions
 		exitUI = new ExitKioskUI();
 		exitUI.addButtonActionListener(this);
+		exitUI.addTicketFieldActionListener(this);
+		exitUI.addLicenseFieldActionListener(this);
 		
-		// create a registerUI to go with this too
+		// create a gate and observe it's status
+		// create the entry Gate and make sure it starts closed
+		exitGate = new Gate();	
+		exitGate.addObserver(this);
+		exitGate.closeGate();
 		
-		
+		// create a cash register ui for taking payments
 		registerUI = new RegisterUI();
 			
 	}
@@ -45,41 +53,58 @@ public class ExitKiosk extends Observable implements ActionListener {
 		
 		String eventName = event.getActionCommand();
 		
-		//System.out.println("Event triggered:" + eventName);
-		//System.out.println("Ticket Number:" + ticketNumber);
+		System.out.println("event:" + eventName);
 		
-		int ticketNumber = exitUI.getTicketNumber();
+		Ticket thisTicket = null;
 		
-		exitUI.setMessage("Pressed Exit Button");
+		switch (eventName) {
 		
-		Ticket thisTicket = garage.getTicketNumber(ticketNumber);
+		case "DetermineFees":
+			exitUI.setMessage("Determine Fees");
+
+			break;
+		case "LicenseField":
+			exitUI.setMessage("License field");
+
+			String licensePlate = exitUI.getLicensePlate();
+			thisTicket = garage.getTicketForLicensePlate(licensePlate);
+			
+			break;
+		case "TicketField":
+			exitUI.setMessage("Ticket Num");
+			int ticketNumber = exitUI.getTicketNumber();
+			thisTicket = garage.getTicketNumber(ticketNumber);
+
+			break;
+		}
 		
 		if (thisTicket == null) {
 			// handle ticket not found
 			exitUI.setMessage("Ticket Not Found");
-			
+			exitUI.setBottomMessage("");
 		} else {
 		
-			//System.out.println("TimeIn for:" + ticketNumber + ":" + thisTicket.getTimeIn());
-			
 			Transaction transaction = new Transaction(thisTicket);
-			
-			//System.out.println("TimeOut:" + transaction.getTimeOut());
-			//System.out.println("You owe:" + transaction.getAmount());
-			
 			exitUI.setBottomMessage("You owe: $" + transaction.getAmount());
-			
 			setChanged();
 			notifyObservers("exit");
+
 		}
 		
 	}
 	
 	
+	public void update(Observable o, Object arg) {
+
+		// Exit observes the exit gate, waits for cars to exit
+		//System.out.println("Update called:" + o + ":" + arg);
+		
+		if (arg == "GateOpen") {
+			exitUI.setGateStatus(true);
+		} else if (arg == "GateClosed") {
+			exitUI.setGateStatus(false);
+		}
 	
-	
-	
-	
-	
+	}
 	
 }

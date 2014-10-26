@@ -34,12 +34,15 @@ public class DataStorage {
 	
 	public void addVirtualTicket(Ticket ticket) {
 		
-		String key = ticket.getAutomobile().getLicenseStateCode() + " - " +
+		String key = ticket.getAutomobile().getLicenseStateCode() + "-" +
 				ticket.getAutomobile().getLicensePlateNumber();
+		
+		System.out.println("license: " + key);
 		
 		virtualTicketMap.put(key, ticket);
 		
 	}
+	
 	
 	public void addPhysicalTicket(Ticket ticket) {
 		
@@ -55,6 +58,12 @@ public class DataStorage {
 		
 	}
 
+	public Ticket getTicketForLicensePlate (String licensePlate) {
+		
+		return virtualTicketMap.get(licensePlate);
+		
+	}
+	
 	public void updateOccupancyData (Date timestamp, int occupancy) {
 		
 		occupancyData.put(timestamp,  occupancy);

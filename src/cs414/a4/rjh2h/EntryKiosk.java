@@ -40,11 +40,11 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 		
 		// create the entry Gate and make sure it starts closed
 		entryGate = new Gate();
-		entryGate.closeGate();
-		
-		entryUI.setGateStatus(true);
 		
 		entryGate.addObserver(this);
+		
+		entryGate.closeGate();
+		
 		
 	}
 
@@ -56,12 +56,10 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 	public void update(Observable o, Object arg) {
 		// Entry observes the ParkingGarage.  If garage is closed, entry is not allowed.
 		
-		System.out.println("Update called:" + o + ":" + arg);
+		//System.out.println("Update called:" + o + ":" + arg);
 		
 		if (arg == "GateOpen") {
 			entryUI.setGateStatus(true);
-			System.out.println("set gate status open");
-			
 		} else if (arg == "GateClosed") {
 			entryUI.setGateStatus(false);
 		} else {
@@ -103,7 +101,6 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 
 			String entryMessage = "Time is " + dateOut;
 			
-			
 			String entryMessage2 = " License: " + 
 					currentTicket.getAutomobile().getLicensePlateNumber() + " State: " + 
 					currentTicket.getAutomobile().getLicenseStateCode();
@@ -117,13 +114,17 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 			break;
 			
 		case "DispenseTicketButton":
+			// this dispenses an actual ticket, shows in the printedTicket UI
 
 			entryUI.enableTicketButtons(false);
 			entryUI.enableEnterButton(true);
 
 			PhysicalTicketUI printedTicket = new PhysicalTicketUI(currentTicket);	
 			
+			// add to the list of physical tickets current out (by number)
 			garage.addPhysicalTicket(currentTicket);
+			// also track it as a virtual ticket if possible
+			garage.addVirtualTicket(currentTicket);
 			
 			entryUI.setMessage1("Press Top Button to Enter");
 	    	entryUI.setMessage2("");
@@ -140,6 +141,7 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 			entryUI.enableTicketButtons(false);
 			entryUI.enableEnterButton(true);
 
+			// just track it as a virtual ticket (by license plate)
 			garage.addVirtualTicket(currentTicket);
 		
 			entryUI.setMessage1("Press Top Button to Enter");

@@ -1,11 +1,18 @@
 package cs414.a4.rjh2h;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
+
+import javax.swing.Timer;
 
 public class Gate extends Observable {
 	
 	private boolean isOpen;
 	private boolean carSensor;
+	private Timer carWaitTimer;
+	public final static int WAIT_TIME = 5000;
+
 	
 	public Gate() {
 		super();
@@ -32,22 +39,23 @@ public class Gate extends Observable {
 		// opens the gate, waits for the car, closes the gate
 		openGate();
 		waitForCar();
-		closeGate();
 	}
 	
 	private void waitForCar() {
+		
 		// check the car sensor and wait while a car is there
-		do {
-			
-			try {
-				  Thread.sleep(1000);
-			} catch (InterruptedException ie) {
-				    //Handle exception
-			}
-			
-			this.carSensor = false;
-			
-		} while (this.carSensor== true);
+		// since we don't have an actual carSensor, we wait
+		// a set amount of time
+		
+		carWaitTimer = new Timer(WAIT_TIME, new ActionListener() {
+		    public void actionPerformed(ActionEvent evt) {
+			    closeGate();
+			    carWaitTimer.stop();
+		    }    
+		});
+		
+		carWaitTimer.start();
+		
 	}
 	
 	

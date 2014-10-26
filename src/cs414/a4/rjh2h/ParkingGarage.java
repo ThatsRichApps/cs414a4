@@ -110,14 +110,18 @@ public class ParkingGarage extends Observable implements Observer {
 		dataStorage.addPhysicalTicket(ticket);
 		
 	}
-
+	
 	public Ticket getTicketNumber (int ticketNumber) {
 		
 		return dataStorage.getTicketNumber(ticketNumber);
 		
 	}
 	
-	
+	public Ticket getTicketForLicensePlate(String licensePlate) {
+		
+		return dataStorage.getTicketForLicensePlate(licensePlate);
+		
+	}
 	
 	
 }
