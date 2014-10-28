@@ -9,41 +9,40 @@ import org.junit.Test;
 import cs414.a4.rjh2h.ui.SignUI;
 
 public class SignUITest {
-
+	
+	private SignUI entrySign; 
+	
 	@Before
 	public void setUp() throws Exception {
+		entrySign = new SignUI();
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
 
+
 	@Test
 	public void testSign1() {
 
-		SignUI entrySign = new SignUI();
-		entrySign.setMessage("test message");	
-		assertEquals("test message",entrySign.getMessage());
+		assertEquals("Welcome to the Garage",entrySign.getMessage());
 	
 	}
 
 	@Test
 	public void testSign2() {
 
-		SignUI entrySign = new SignUI();
-		assertEquals("Welcome to the Garage",entrySign.getMessage());
+		entrySign.setMessage("test message");	
+		assertEquals("test message",entrySign.getMessage());
 	
 	}
 	
 	@Test
 	public void testSign3() {
 
-		SignUI entrySign = new SignUI();
 		entrySign.setMessage(null);	
 		assertEquals(null,entrySign.getMessage());
 	
 	}
-
-	
 	
 }

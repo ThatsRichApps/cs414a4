@@ -10,13 +10,12 @@ import cs414.a4.rjh2h.Gate;
 
 public class GateTest {
 	
-	private Gate entryGate;
-	
+	private Gate testGate;
 
 	@Before
 	public void setUp() throws Exception {
 		
-		entryGate = new Gate();
+		testGate = new Gate();
 		
 	}
 
@@ -25,28 +24,32 @@ public class GateTest {
 	}
 
 	@Test
-	public void testGate() {
-		assertFalse(entryGate.isOpen());	
+	public void testGate1() {
+		assertEquals("Gate",testGate.toString());	
 	}
 
 	@Test
 	public void testIsOpen() {
-		assertFalse(false);
+		assertFalse(testGate.isOpen());
 	}
 
 	@Test
 	public void testOpenGate() {
-		fail("Not yet implemented");
+		testGate.openGate();
+		assertTrue(testGate.isOpen());
 	}
 
 	@Test
 	public void testCloseGate() {
-		fail("Not yet implemented");
+		testGate.closeGate();
+		assertFalse(testGate.isOpen());
 	}
 
 	@Test
 	public void testOpenGateForCar() {
-		fail("Not yet implemented");
+		testGate.closeGate();
+		testGate.openGateForCar();
+		assertTrue(testGate.isOpen());
 	}
 
 }

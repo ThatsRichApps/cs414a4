@@ -9,15 +9,10 @@ public class ALPR {
 	// plus the license number with dashes: CO-AAA-123
 	
 	public ALPR () {
-		// there would be one instance of ALPR per camera
-		// one at each entrance and one at each exit
+		// ALPR is instantiated once per vehicle
+		// and used to determine licensePlate
 	}
 	
-	public ALPR(String licenseNumber, String stateCode) {
-		super();
-		this.licensePlate = stateCode + "-" + licenseNumber;
-	}
-
 	public ALPR(String licensePlate) {
 		
 		this.licensePlate = licensePlate;

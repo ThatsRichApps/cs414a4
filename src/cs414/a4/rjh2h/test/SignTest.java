@@ -10,8 +10,14 @@ import cs414.a4.rjh2h.Sign;
 
 public class SignTest extends Sign {
 
+	private Sign testSign;
+	
+	
 	@Before
 	public void setUp() throws Exception {
+	
+		testSign = new Sign();
+	
 	}
 
 	@After
@@ -19,11 +25,16 @@ public class SignTest extends Sign {
 	}
 
 	@Test
-	public void testSign() {
-
-		Sign testSign = new Sign();
+	public void testSign1() {
 		assertEquals("Entry Sign Controller", testSign.toString());
+	}
+
+	@Test
+	public void testSign2() {
 		
+		testSign.setMessage("Garage is OPEN!");
+		assertEquals("Entry Sign Controller", testSign.toString());
+
 	}
 
 }

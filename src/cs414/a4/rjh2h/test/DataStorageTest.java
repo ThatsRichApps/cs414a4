@@ -10,8 +10,13 @@ import cs414.a4.rjh2h.DataStorage;
 
 public class DataStorageTest extends DataStorage {
 
+	private DataStorage dataStorage;
+	
 	@Before
 	public void setUp() throws Exception {
+
+		dataStorage = new DataStorage();
+		
 	}
 
 	@After
@@ -19,8 +24,16 @@ public class DataStorageTest extends DataStorage {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testDataStorage1() {
+
+		assertEquals("DataStorage", dataStorage.toString());
+	
 	}
 
+	
+	
+	
+	
+	
+	
 }

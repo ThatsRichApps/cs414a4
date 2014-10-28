@@ -9,7 +9,6 @@ import javax.swing.Timer;
 public class Gate extends Observable {
 	
 	private boolean isOpen;
-	private boolean carSensor;
 	private Timer carWaitTimer;
 	public final static int WAIT_TIME = 4000;
 
@@ -19,6 +18,11 @@ public class Gate extends Observable {
 		closeGate();
 	}
 	
+	@Override
+	public String toString() {
+		return "Gate";
+	}
+
 	public boolean isOpen() {
 		return isOpen;
 	}
@@ -44,7 +48,7 @@ public class Gate extends Observable {
 	private void waitForCar() {
 		
 		// check the car sensor and wait while a car is there
-		// since we don't have an actual carSensor, we wait
+		// since we don't have an actual car sensor, we wait
 		// a set amount of time
 		
 		carWaitTimer = new Timer(WAIT_TIME, new ActionListener() {

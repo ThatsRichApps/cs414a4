@@ -15,6 +15,8 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 	private ParkingGarage garage;
 	private Register register;
 	private Gate exitGate;
+	private Ticket currentTicket;
+	private Transaction currentTransaction;
 	
 	public ExitKiosk() {
 		
@@ -42,6 +44,9 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 		
 		// create a cash register for taking payments
 		register = new Register();
+		
+		currentTicket = null;
+		currentTransaction = null;
 				
 	}
 
@@ -56,20 +61,18 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 		
 		System.out.println("event:" + eventName);
 		
-		Ticket thisTicket = null;
-		
 		String message = "";
 		
 		switch (eventName) {
 		
 		case "LicenseField":
 			String licensePlate = exitUI.getLicensePlate();
-			thisTicket = garage.getTicketForLicensePlate(licensePlate);
+			currentTicket = garage.getTicketForLicensePlate(licensePlate);
 			message = "Fee by License: " + licensePlate;
 			break;
 		case "TicketField":
 			int ticketNumber = exitUI.getTicketNumber();
-			thisTicket = garage.getTicketNumber(ticketNumber);
+			currentTicket = garage.getTicketNumber(ticketNumber);
 			message = "Fee by Ticket: " + ticketNumber;
 			break;
 		case "LostTicket":
@@ -88,21 +91,21 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 			break;
 		}
 		
-		if (thisTicket == null) {
+		if (currentTicket == null) {
 			// handle ticket not found
 			exitUI.setMessage("Ticket Not Found");
 			exitUI.setPaymentMessage("");
 		} else {
 
 			exitUI.setMessage(message);
-			Transaction transaction = new Transaction(thisTicket);
-			exitUI.setPaymentMessage("You owe: $" + transaction.getAmount());
+			currentTransaction = new Transaction(currentTicket);
+			exitUI.setPaymentMessage("You owe: $" + currentTransaction.getAmount());
 			
 			// now enable the payment buttons and disable find ticket buttons
 			exitUI.enableFindTicketButtons(false);
 			exitUI.enablePaymentTickets(true);
 			
-			register.setAmountDue(transaction.getAmount());
+			register.setAmountDue(currentTransaction.getAmount());
 			
 			setChanged();
 			notifyObservers("exit");

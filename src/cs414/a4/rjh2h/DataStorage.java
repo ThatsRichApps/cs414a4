@@ -13,10 +13,15 @@ public class DataStorage {
 	
 	public DataStorage() {
 		
-		// initialize any test data here
+		// initialize any pre startup test data here
 		
 	}
 	
+	@Override
+	public String toString() {
+		return "DataStorage";
+	}
+
 	public HashMap<String, Ticket> getVirtualTicketMap() {
 		return virtualTicketMap;
 	}

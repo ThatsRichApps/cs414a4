@@ -42,7 +42,6 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 		
 		entryGate.closeGate();
 		
-		
 	}
 
 	@Override

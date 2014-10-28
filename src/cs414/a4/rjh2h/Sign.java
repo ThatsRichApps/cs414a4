@@ -7,7 +7,17 @@ import cs414.a4.rjh2h.ui.SignUI;
 
 public class Sign implements Observer {
 
-	private SignUI entrySignUI = new SignUI();
+	private SignUI entrySignUI;
+	
+	public Sign () {
+		
+		entrySignUI = new SignUI();
+		
+	}
+	
+	public void setMessage(String message) {
+		entrySignUI.setMessage(message);
+	}
 	
 	@Override
 	public String toString() {
@@ -26,8 +36,8 @@ public class Sign implements Observer {
 	    	garageState = "Full";
 	    }
 	    	
-	    entrySignUI.setMessage("Garage is " + garageState);
-	    
+	    setMessage("Garage is " + garageState);
+	     
 	}
 	
 }

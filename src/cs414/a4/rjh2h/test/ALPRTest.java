@@ -22,10 +22,25 @@ public class ALPRTest extends ALPR {
 	public void testALPR1() {
 
 		ALPR testALPR = new ALPR();
-		
-		assertEquals("CO", testALPR.getStateCode());
-		//assertEquals("AAA", testALPR.getLicenseNumber());
+		assertEquals(10, testALPR.getLicensePlate().length());
 		
 	}
 
+	@Test
+	public void testALPR2() {
+
+		ALPR testALPR = new ALPR("AK-AAA-123");
+		assertEquals("AK-AAA-123", testALPR.getLicensePlate());
+		
+	}
+	
+	@Test
+	public void testALPR3() {
+
+		ALPR testALPR = new ALPR(null);
+		assertEquals(10, testALPR.getLicensePlate().length());
+			
+	}
+	
+	
 }

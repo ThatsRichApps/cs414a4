@@ -108,7 +108,6 @@ public class ParkingGarage extends Observable implements Observer, ActionListene
 	public void actionPerformed(ActionEvent event) {
 		
 		String eventName = event.getActionCommand();
-		System.out.println("event:" + eventName);
 		
 		switch (eventName) {
 		
@@ -120,9 +119,6 @@ public class ParkingGarage extends Observable implements Observer, ActionListene
 			break;
 		
 		}
-		
-		
-
 	}
 	
 
