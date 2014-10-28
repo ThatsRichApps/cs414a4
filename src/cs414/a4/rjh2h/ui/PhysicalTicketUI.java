@@ -15,7 +15,11 @@ import cs414.a4.rjh2h.Ticket;
 public class PhysicalTicketUI extends JFrame {
 
 	private static final long serialVersionUID = -7528681233196221855L;
-
+	
+	public PhysicalTicketUI() {
+		
+	}
+	
 	public PhysicalTicketUI(Ticket thisTicket) {
 	
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);

@@ -3,13 +3,10 @@ package cs414.a4.rjh2h;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
-
-import javax.swing.text.DateFormatter;
 
 import cs414.a4.rjh2h.ui.EntryKioskUI;
 import cs414.a4.rjh2h.ui.PhysicalTicketUI;
@@ -102,8 +99,7 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 			String entryMessage = "Time is " + dateOut;
 			
 			String entryMessage2 = " License: " + 
-					currentTicket.getAutomobile().getLicensePlateNumber() + " State: " + 
-					currentTicket.getAutomobile().getLicenseStateCode();
+					currentTicket.getAutomobile().getLicensePlate();
 			
 			entryUI.setMessage1(entryMessage);
 			entryUI.setMessage2(entryMessage2);
@@ -119,6 +115,7 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 			entryUI.enableTicketButtons(false);
 			entryUI.enableEnterButton(true);
 
+			@SuppressWarnings("unused")
 			PhysicalTicketUI printedTicket = new PhysicalTicketUI(currentTicket);	
 			
 			// add to the list of physical tickets current out (by number)

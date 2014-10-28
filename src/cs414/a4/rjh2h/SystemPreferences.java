@@ -2,6 +2,8 @@ package cs414.a4.rjh2h;
 
 import java.math.BigDecimal;
 
+import cs414.a4.rjh2h.ui.SysAdminUI;
+
 public class SystemPreferences {
 
 	// initialize the system variables here
@@ -9,6 +11,7 @@ public class SystemPreferences {
 	private BigDecimal hourlyFee;
 	private BigDecimal maxFee;
 	private int maxOccupancy;
+	private SysAdminUI sysAdminUI;
 
 	public SystemPreferences() {
 		
@@ -16,6 +19,12 @@ public class SystemPreferences {
 		hourlyFee = new BigDecimal("2.00");
 		maxFee = hourlyFee.multiply(new BigDecimal("24"));
 		maxOccupancy = 5;
+		
+	}
+	
+	public void showAdminUI() {
+		
+		sysAdminUI = new SysAdminUI();
 		
 	}
 

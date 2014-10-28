@@ -2,6 +2,7 @@ package cs414.a4.rjh2h.ui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
@@ -21,13 +22,11 @@ public class RegisterUI extends JFrame {
 	private JButton exitButton;
     private JFormattedTextField enterTicketField;
     
-    private String topMessage;
     private JLabel topMessageLabel;
     
-    private String bottomMessage;
     private JLabel bottomMessageLabel;
     
-    private JDialog loginDialog;
+    //private JDialog loginDialog;
     
     
     public RegisterUI () {
@@ -41,11 +40,9 @@ public class RegisterUI extends JFrame {
         title = "Cash Register";
         setTitle(title);
         
-        topMessage = "";
-        topMessageLabel = new JLabel(topMessage, SwingConstants.CENTER);
+        topMessageLabel = new JLabel("", SwingConstants.CENTER);
         
-        bottomMessage = "";
-        bottomMessageLabel = new JLabel(bottomMessage, SwingConstants.CENTER);
+        bottomMessageLabel = new JLabel("", SwingConstants.CENTER);
         
         exitButton = new JButton("Payment");
         
@@ -86,8 +83,11 @@ public class RegisterUI extends JFrame {
     }
 	
 	public void setTopMessage(String message) {
-		this.topMessage = message;
 		topMessageLabel.setText(message);
 	}
 
+	public void setAmountDue(BigDecimal amount) {
+		topMessageLabel.setText(amount.toString());
+	}
+	
 }

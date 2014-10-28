@@ -19,18 +19,17 @@ import javax.swing.text.MaskFormatter;
 
 public class ExitKioskUI extends JFrame {
 
-	private String title;
-	private String message;
-    private JLabel messageLabel;
-    private JButton exitButton;
+	private static final long serialVersionUID = -8347099823510457669L;
+	private JLabel messageLabel;
     
     private JFormattedTextField enterTicketField;
     private JFormattedTextField licensePlateField;
+    private JButton lostTicketButton;
     
-    private String topMessage;
     private JLabel topMessageLabel;
     
     private JLabel paymentMessageLabel;
+    private JLabel selectPaymentMessageLabel;
     
     private JLabel gateStatusLabel;
 	
@@ -41,25 +40,18 @@ public class ExitKioskUI extends JFrame {
     
 	public ExitKioskUI() {
 		initUI();
+		enableFindTicketButtons(true);
+		enablePaymentTickets(false);
 	}
 	
     private void initUI() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        title = "Exit Kiosk";
-        setTitle(title);
+        setTitle("Exit Kiosk");
         
-        message = "";
-        messageLabel = new JLabel(message, SwingConstants.CENTER);
+        topMessageLabel = new JLabel("Enter Ticket Num or License Plate", SwingConstants.CENTER);
         
-        topMessage = "Enter Ticket Num or License Plate";
-        topMessageLabel = new JLabel(topMessage, SwingConstants.CENTER);
+        messageLabel = new JLabel("", SwingConstants.CENTER);
         
-        paymentMessageLabel = new JLabel("", SwingConstants.CENTER);
-        
-        exitButton = new JButton("Determine Fees");
-        exitButton.setActionCommand("DetermineFees");
-        
-        JPanel pane = new JPanel(new GridLayout(9, 1));
         
         // create enter ticket field with integer as input   
         enterTicketField = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -74,18 +66,7 @@ public class ExitKioskUI extends JFrame {
 			e.printStackTrace();
 		}
         
-        
-        payCashButton = new JButton("Pay by Cash");
-        payCashButton.setActionCommand("PayCash");
-        
-        payOnAccountButton = new JButton("Pay on Account");
-        payOnAccountButton.setActionCommand("PayOnAccount");
-        
-        creditCardField = new JFormattedTextField(createFormatter("#### #### #### ####"));
-        creditCardField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
-        creditCardField.setActionCommand("CreditCardField");
-        creditCardField.setText("1111 1111 1111 11111");
-        
+
         // create enter license plate field   
         licensePlateField = new JFormattedTextField(createFormatter("UU-UUU-###"));
         licensePlateField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
@@ -105,15 +86,36 @@ public class ExitKioskUI extends JFrame {
 			}
         });
         
+        lostTicketButton = new JButton("Lost Ticket");
+        lostTicketButton.setActionCommand("LostTicket");
+        
+        paymentMessageLabel = new JLabel("", SwingConstants.CENTER);
+        selectPaymentMessageLabel = new JLabel("Enter CC or Select Payment Type", SwingConstants.CENTER);
+        
+        creditCardField = new JFormattedTextField(createFormatter("#### #### #### ####"));
+        creditCardField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
+        creditCardField.setActionCommand("CreditCardField");
+        creditCardField.setText("1111 1111 1111 11111");
+        
+        payCashButton = new JButton("Pay by Cash");
+        payCashButton.setActionCommand("PayCash");
+        
+        payOnAccountButton = new JButton("Pay on Account");
+        payOnAccountButton.setActionCommand("PayOnAccount");
+        
+        
         gateStatusLabel = new JLabel("Gate is Closed", SwingConstants.CENTER);
 		
+        JPanel pane = new JPanel(new GridLayout(10, 1));
+        
         pane.add(topMessageLabel);
         pane.add(enterTicketField);
         pane.add(licensePlateField);
-        //pane.add(exitButton);
         pane.add(messageLabel);
 
         pane.add(paymentMessageLabel);
+        
+        pane.add(selectPaymentMessageLabel);
         pane.add(creditCardField);
         pane.add(payOnAccountButton);
         pane.add(payCashButton);
@@ -147,7 +149,6 @@ public class ExitKioskUI extends JFrame {
     }
     
 	public void setMessage(String message) {
-		this.message = message;
 		messageLabel.setText(message);
 	}
 
@@ -155,22 +156,18 @@ public class ExitKioskUI extends JFrame {
 		paymentMessageLabel.setText(message);
 	}
 
-	public int getTicketNumber () {
-		
+	public void setSelectPaymentMessage(String message) {
+		selectPaymentMessageLabel.setText(message);
+	}
+	
+	public int getTicketNumber () {	
 		int ticketNumber = Integer.parseInt(enterTicketField.getText());
 		return ticketNumber;
-		
 	}
 
 	public String getLicensePlate () {
-		
 		String licensePlate = licensePlateField.getText();
 		return licensePlate;
-		
-	}
-	
-	public void addButtonActionListener(ActionListener listener) {
-	    exitButton.addActionListener(listener);
 	}
 	
 	public void addTicketFieldActionListener(ActionListener listener) {
@@ -181,14 +178,36 @@ public class ExitKioskUI extends JFrame {
 	    licensePlateField.addActionListener(listener);
 	}
 
+	public void addCreditCardFieldActionListener(ActionListener listener) {
+	    creditCardField.addActionListener(listener);
+	}
+	
+	public void addPayCashButtonActionListener(ActionListener listener) {
+	    payCashButton.addActionListener(listener);
+	}
+	
+	public void addPayOnAccountButtonActionListener(ActionListener listener) {
+	    payOnAccountButton.addActionListener(listener);
+	}
+	
+	public void enablePaymentTickets(boolean enabled) {
+		creditCardField.setEnabled(enabled);
+		payCashButton.setEnabled(enabled);
+		payOnAccountButton.setEnabled(enabled);
+	}
+	
+	public void enableFindTicketButtons(Boolean enabled) {
+		enterTicketField.setEnabled(enabled);
+		licensePlateField.setEnabled(enabled);
+	}
+	
+	
 	public void setGateStatus (boolean isOpen) {
 		if (isOpen) {
-			gateStatusLabel.setText("Gate is Open, wait for car entry");
+			gateStatusLabel.setText("Gate is Open, wait for car exit");
 		} else {
 			gateStatusLabel.setText("Gate is Closed");
 		}
 	}
 
-	
-	
 }

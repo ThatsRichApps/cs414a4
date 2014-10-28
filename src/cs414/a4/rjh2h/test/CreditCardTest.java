@@ -6,9 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import cs414.a4.rjh2h.Automobile;
+import cs414.a4.rjh2h.CreditCard;
 
-public class AutomobileTest extends Automobile {
+public class CreditCardTest extends CreditCard {
 
 	@Before
 	public void setUp() throws Exception {
@@ -19,12 +19,8 @@ public class AutomobileTest extends Automobile {
 	}
 
 	@Test
-	public void testAutomobile() {
-
-		Automobile autoTest = new Automobile();
-		
-		assertTrue(autoTest.getLicensePlateNumber().length() == 7);
-	
+	public void test() {
+		fail("Not yet implemented");
 	}
 
 }

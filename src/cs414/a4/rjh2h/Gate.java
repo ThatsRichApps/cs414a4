@@ -11,7 +11,7 @@ public class Gate extends Observable {
 	private boolean isOpen;
 	private boolean carSensor;
 	private Timer carWaitTimer;
-	public final static int WAIT_TIME = 5000;
+	public final static int WAIT_TIME = 4000;
 
 	
 	public Gate() {

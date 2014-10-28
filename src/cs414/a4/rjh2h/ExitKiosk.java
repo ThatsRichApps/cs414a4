@@ -13,7 +13,7 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 	
 	private ExitKioskUI exitUI;
 	private ParkingGarage garage;
-	//private RegisterUI registerUI;
+	private Register register;
 	private Gate exitGate;
 	
 	public ExitKiosk() {
@@ -27,21 +27,23 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 		
 		// create the exit kiosk UI and listen for actions
 		exitUI = new ExitKioskUI();
-		exitUI.addButtonActionListener(this);
+		
+		// Add the ExitKiosk (this) as the Action Listener for UI Actions
 		exitUI.addTicketFieldActionListener(this);
 		exitUI.addLicenseFieldActionListener(this);
+		exitUI.addPayCashButtonActionListener(this);
+		exitUI.addPayOnAccountButtonActionListener(this);
+		exitUI.addCreditCardFieldActionListener(this);
 		
 		// create a gate and observe it's status
-		// create the entry Gate and make sure it starts closed
 		exitGate = new Gate();	
 		exitGate.addObserver(this);
 		exitGate.closeGate();
 		
-		// create a cash register ui for taking payments
-		//registerUI = new RegisterUI();
+		// create a cash register for taking payments
+		register = new Register();
 				
 	}
-	
 
 	@Override
 	public String toString() {
@@ -60,18 +62,29 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 		
 		switch (eventName) {
 		
-		case "DetermineFees":
-			exitUI.setMessage("Determine Fees");
-			break;
 		case "LicenseField":
 			String licensePlate = exitUI.getLicensePlate();
 			thisTicket = garage.getTicketForLicensePlate(licensePlate);
-			message = "Fee set by License: " + licensePlate;
+			message = "Fee by License: " + licensePlate;
 			break;
 		case "TicketField":
 			int ticketNumber = exitUI.getTicketNumber();
 			thisTicket = garage.getTicketNumber(ticketNumber);
-			message = "Fee set by Ticket: " + ticketNumber;
+			message = "Fee by Ticket: " + ticketNumber;
+			break;
+		case "LostTicket":
+			break;
+		case "PayCash":
+			exitUI.enableFindTicketButtons(true);
+			exitUI.enablePaymentTickets(false);
+			break;
+		case "PayOnAccount":
+			exitUI.enableFindTicketButtons(true);
+			exitUI.enablePaymentTickets(false);
+			break;
+		case "PayCreditCard":
+			exitUI.enableFindTicketButtons(true);
+			exitUI.enablePaymentTickets(false);
 			break;
 		}
 		
@@ -84,10 +97,23 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 			exitUI.setMessage(message);
 			Transaction transaction = new Transaction(thisTicket);
 			exitUI.setPaymentMessage("You owe: $" + transaction.getAmount());
+			
+			// now enable the payment buttons and disable find ticket buttons
+			exitUI.enableFindTicketButtons(false);
+			exitUI.enablePaymentTickets(true);
+			
+			register.setAmountDue(transaction.getAmount());
+			
 			setChanged();
 			notifyObservers("exit");
-
+			
 		}
+		
+	}
+
+	public void openGate() {
+		
+		exitGate.openGateForCar();
 		
 	}
 	

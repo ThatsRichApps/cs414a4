@@ -5,58 +5,68 @@ import java.util.Random;
 public class ALPR {
 	
 	private String licensePlate;
-	private String stateCode;
+	// license plate is the combination of the state code
+	// plus the license number with dashes: CO-AAA-123
 	
 	public ALPR () {
+		// there would be one instance of ALPR per camera
+		// one at each entrance and one at each exit
+	}
+	
+	public ALPR(String licenseNumber, String stateCode) {
+		super();
+		this.licensePlate = stateCode + "-" + licenseNumber;
+	}
+
+	public ALPR(String licensePlate) {
 		
-		// when instantiated, this would query the camera to get the
-		// license plate of the car near the camera denoted by 
-		// the location
+		this.licensePlate = licensePlate;
 		
 	}
 	
-	public ALPR(String licensePlate, String stateCode) {
-		super();
-		this.licensePlate = licensePlate;
-		this.stateCode = stateCode;
-	}
-
-	public String getLicenseNumber() {
-
-		if (licensePlate != null) {		
-			return this.licensePlate;
-			
-		} else {
-			Random r;
-			
-			// generate a random plate number
-			r = new Random();
-			char c1 = (char)(r.nextInt(26) + 'A');
-			r = new Random();
-			char c2 = (char)(r.nextInt(26) + 'A');
-			r = new Random();
-			char c3 = (char)(r.nextInt(26) + 'A');
-			r = new Random();
-			char c4 = (char)(r.nextInt(10) + '0');
-			r = new Random();
-			char c5 = (char)(r.nextInt(10) + '0');
-			r = new Random();
-			char c6 = (char)(r.nextInt(10) + '0');
-			
-			String alphaPlate = new String(new char[]{ c1, c2, c3, '-', c4, c5, c6});
-			this.licensePlate = alphaPlate;
-			
-			return alphaPlate;
+	public String getLicensePlate() {
+		
+		if (this.licensePlate == null) {
+			this.licensePlate = getStateCode() + "-" + getLicenseNumber();
 		}
+	
+		return this.licensePlate;
+	}
+	
+	public String getLicenseNumber() {
+		
+		// this would query the camera and the ocr software 
+		// to determine the actual license number in real case
+		// until then, generate a random license plate
+		
+		Random r;
+			
+		// generate a random plate number
+		r = new Random();
+		char c1 = (char)(r.nextInt(26) + 'A');
+		r = new Random();
+		char c2 = (char)(r.nextInt(26) + 'A');
+		r = new Random();
+		char c3 = (char)(r.nextInt(26) + 'A');
+		r = new Random();
+		char c4 = (char)(r.nextInt(10) + '0');
+		r = new Random();
+		char c5 = (char)(r.nextInt(10) + '0');
+		r = new Random();
+		char c6 = (char)(r.nextInt(10) + '0');
+			
+		String alphaPlate = new String(new char[]{ c1, c2, c3, '-', c4, c5, c6});
+		this.licensePlate = alphaPlate;
+			
+		return alphaPlate;
 	}
 
 	public String getStateCode() {
-		if (stateCode != null) {
-			return this.stateCode;
-		} else {
-			this.stateCode = "CO";
-			return ("CO");
-		}
+	
+		// return Colorado as the state code
+		// this would also query the camera and ocr software
+		// to determine action statecode in real case
+		return ("CO");
 	}
 	
 }

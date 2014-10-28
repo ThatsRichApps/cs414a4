@@ -6,9 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import cs414.a4.rjh2h.SysAdminHandler;
+import cs414.a4.rjh2h.ui.UsageReportsUI;
 
-public class SysAdminHandlerTest extends SysAdminHandler {
+public class UsageReportsUITest extends UsageReportsUI {
 
 	@Before
 	public void setUp() throws Exception {

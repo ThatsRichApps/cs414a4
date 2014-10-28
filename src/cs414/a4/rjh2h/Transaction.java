@@ -9,9 +9,7 @@ public class Transaction {
 	private BigDecimal amount;
 	private Ticket ticket;
 	
-	
 	public Transaction () {
-
 	}
 	
 	public Transaction(Ticket ticket) {
@@ -19,10 +17,10 @@ public class Transaction {
 		this.ticket = ticket;
 		
 		// set timeOut to creation time
-		timeOut = new Date();
-		
-		amount = calculateFees();
-		
+		setTimeOut();
+	
+		// determine fees based upon ticket
+		this.amount = calculateFees();
 	}
 	
 	public BigDecimal getAmount() {
@@ -30,9 +28,11 @@ public class Transaction {
 	}
 	
 	public Date getTimeOut() {
-		
 		return this.timeOut;
-		
+	}
+	
+	public void setTimeOut() {
+		this.timeOut = new Date();
 	}
 
 	public BigDecimal calculateFees (){
@@ -42,7 +42,6 @@ public class Transaction {
 		Date timeIn = ticket.getTimeIn();
 		
 		// determine the number of hours in the garage
-		
 		double timeDifference = timeOut.getTime() - timeIn.getTime(); 
 		double diffHours = timeDifference / (60 * 60 * 1000) % 24;
 		

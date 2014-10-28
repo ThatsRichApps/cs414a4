@@ -4,21 +4,21 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class SysAdminUI extends JFrame {
+public class UsageReportsUI extends JFrame {
 
-	private static final long serialVersionUID = -7241484193835854441L;
+	private static final long serialVersionUID = -4705765678072542814L;
 	private JLabel messageLabel;
 	
-	public SysAdminUI() {
+	public UsageReportsUI() {
 		initUI();
 	}
 	
     private void initUI() {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
-        setTitle("System Administration");
+        setTitle("Usage Reports");
                 
-        messageLabel =  new JLabel("System Adminstration", SwingConstants.CENTER);
+        messageLabel =  new JLabel("Usage Reports", SwingConstants.CENTER);
         		
         add(messageLabel);
        
@@ -30,9 +30,5 @@ public class SysAdminUI extends JFrame {
 	public void setMessage(String message) {
 		messageLabel.setText(message);
 	}
-
-
-	
-	
 	
 }

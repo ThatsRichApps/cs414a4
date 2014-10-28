@@ -3,6 +3,8 @@ package cs414.a4.rjh2h;
 import java.util.Date;
 import java.util.HashMap;
 
+import cs414.a4.rjh2h.ui.SysAdminUI;
+
 public class DataStorage {
 	
 	private HashMap<String, Ticket> virtualTicketMap = new HashMap<String, Ticket>();
@@ -13,9 +15,8 @@ public class DataStorage {
 		
 		// initialize any test data here
 		
-		
 	}
-
+	
 	public HashMap<String, Ticket> getVirtualTicketMap() {
 		return virtualTicketMap;
 	}
@@ -34,8 +35,7 @@ public class DataStorage {
 	
 	public void addVirtualTicket(Ticket ticket) {
 		
-		String key = ticket.getAutomobile().getLicenseStateCode() + "-" +
-				ticket.getAutomobile().getLicensePlateNumber();
+		String key = ticket.getAutomobile().getLicensePlate();
 		
 		System.out.println("license: " + key);
 		

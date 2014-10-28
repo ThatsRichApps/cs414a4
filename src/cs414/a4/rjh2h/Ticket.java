@@ -6,7 +6,7 @@ import java.util.Date;
 public class Ticket {
 	
 	private Date timeIn;
-	private Automobile automobile;
+	private Vehicle automobile;
 	private int ticketNumber;
 	private BigDecimal rate;
 	
@@ -16,10 +16,10 @@ public class Ticket {
 		this.ticketNumber = ticketNumber;
 		
 		// get the current time
-		timeIn = new Date();
+		setTimeIn();
 		
 		// get the info for the current automobile
-		automobile = new Automobile();
+		automobile = new Vehicle();
 		
 		this.rate = rate;
 		
@@ -33,7 +33,7 @@ public class Ticket {
 		return timeIn;
 	}
 
-	public Automobile getAutomobile() {
+	public Vehicle getAutomobile() {
 		return automobile;
 	}
 
@@ -41,6 +41,10 @@ public class Ticket {
 		return rate;
 	}
 
+	public void setTimeIn () {
+		this.timeIn = new Date();
+	}
+	
 	public void setRate(BigDecimal rate) {
 		this.rate = rate;
 	}

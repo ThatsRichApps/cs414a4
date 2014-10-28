@@ -1,12 +1,14 @@
 package cs414.a4.rjh2h;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
 import cs414.a4.rjh2h.ui.GarageUI;
 
-public class ParkingGarage extends Observable implements Observer {
+public class ParkingGarage extends Observable implements Observer, ActionListener {
 	
 	// Parking Garage occupancy is observable.  Also, the garage observes the entryKiosk
 	// in order to know when cars are entering
@@ -15,6 +17,7 @@ public class ParkingGarage extends Observable implements Observer {
 	private int currentOccupancy;
 	private GarageUI garageUI;
 	private SystemPreferences systemPreferences;
+	private UsageReports usageReports;
 	
 	private DataStorage dataStorage;
 	
@@ -29,6 +32,9 @@ public class ParkingGarage extends Observable implements Observer {
 		systemPreferences = new SystemPreferences();
 		dataStorage = new DataStorage();
 
+		garageUI.addSysAdminActionListener(this);
+		garageUI.addShowUsageActionListener(this);
+		
 		Sign entrySign = new Sign();
 		this.addObserver(entrySign);
 		
@@ -98,6 +104,27 @@ public class ParkingGarage extends Observable implements Observer {
 		}
 		
 	}
+	
+	public void actionPerformed(ActionEvent event) {
+		
+		String eventName = event.getActionCommand();
+		System.out.println("event:" + eventName);
+		
+		switch (eventName) {
+		
+		case "SysAdmin":
+			systemPreferences.showAdminUI();
+			break;
+		case "ShowUsage":
+			usageReports = new UsageReports(dataStorage);
+			break;
+		
+		}
+		
+		
+
+	}
+	
 
 	public void addVirtualTicket(Ticket ticket) {
 		
