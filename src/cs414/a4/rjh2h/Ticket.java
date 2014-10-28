@@ -10,21 +10,32 @@ public class Ticket {
 	private int ticketNumber;
 	private BigDecimal rate;
 	
-	public Ticket(int ticketNumber, BigDecimal rate) {
-		
-		// set unique ticket number
-		this.ticketNumber = ticketNumber;
-		
-		// get the current time
+	public Ticket() {
+		this.ticketNumber = 999999;
 		setTimeIn();
-		
-		// get the info for the current automobile
 		vehicle = new Vehicle();
-		
-		this.rate = rate;
-		
+		rate = new BigDecimal(0);
 	}
 	
+	public Ticket(int ticketNumber, BigDecimal rate) {
+		// set unique ticket number
+		this.ticketNumber = ticketNumber;
+		// get the current time
+		setTimeIn();
+		// get the info for the current automobile
+		vehicle = new Vehicle();
+		this.rate = rate;
+	}
+	
+	@Override
+	public String toString() {
+		return "Ticket [" + ticketNumber + "]";
+	}
+	
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
+
 	public int getTicketNumber() {
 		return this.ticketNumber;
 	}
@@ -33,20 +44,16 @@ public class Ticket {
 		return timeIn;
 	}
 
-	public Vehicle getAutomobile() {
-		return vehicle;
-	}
-
 	public BigDecimal getRate() {
 		return rate;
 	}
 
-	public void setTimeIn () {
-		this.timeIn = new Date();
-	}
-	
 	public void setRate(BigDecimal rate) {
 		this.rate = rate;
 	}
 
+	private void setTimeIn () {
+		this.timeIn = new Date();
+	}
+	
 }

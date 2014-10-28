@@ -8,13 +8,17 @@ public class Vehicle {
 		
 		// if no license or plate is given, we use the ALPR System to determine it
 		ALPR licenseSystem = new ALPR();
-	
 		this.licensePlate = licenseSystem.getLicensePlate(); ;
 
 	}
+	
+	@Override
+	public String toString() {
+		return "Vehicle";
+	}
 
-	public Vehicle(String licensePlateNumber, String licenseStateCode) {
-		this.licensePlate = licensePlateNumber;
+	public Vehicle(String licensePlate) {
+		this.licensePlate = licensePlate;
 	}
 
 	public String getLicensePlate() {

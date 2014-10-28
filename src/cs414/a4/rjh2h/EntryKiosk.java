@@ -98,7 +98,7 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 			String entryMessage = "Time is " + dateOut;
 			
 			String entryMessage2 = " License: " + 
-					currentTicket.getAutomobile().getLicensePlate();
+					currentTicket.getVehicle().getLicensePlate();
 			
 			entryUI.setMessage1(entryMessage);
 			entryUI.setMessage2(entryMessage2);

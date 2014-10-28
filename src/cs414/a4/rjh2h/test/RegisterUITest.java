@@ -6,9 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import cs414.a4.rjh2h.Vehicle;
+import cs414.a4.rjh2h.ui.RegisterUI;
 
-public class VehicleTest extends Vehicle {
+public class RegisterUITest extends RegisterUI {
 
 	@Before
 	public void setUp() throws Exception {
@@ -19,12 +19,8 @@ public class VehicleTest extends Vehicle {
 	}
 
 	@Test
-	public void testAutomobile() {
-
-		Vehicle autoTest = new Vehicle();
-		
-		assertTrue(autoTest.getLicensePlate().length() == 7);
-	
+	public void test() {
+		fail("Not yet implemented");
 	}
 
 }
