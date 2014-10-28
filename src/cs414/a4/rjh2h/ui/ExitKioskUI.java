@@ -106,11 +106,12 @@ public class ExitKioskUI extends JFrame {
         
         gateStatusLabel = new JLabel("Gate is Closed", SwingConstants.CENTER);
 		
-        JPanel pane = new JPanel(new GridLayout(10, 1));
+        JPanel pane = new JPanel(new GridLayout(11, 1));
         
         pane.add(topMessageLabel);
         pane.add(enterTicketField);
         pane.add(licensePlateField);
+        pane.add(lostTicketButton);
         pane.add(messageLabel);
 
         pane.add(paymentMessageLabel);
