@@ -124,7 +124,7 @@ public class EntryKioskUI extends JFrame {
 	    setSize(300, 300);
 	    //setLocationRelativeTo(null);
 	    //setLocationByPlatform(true);
-	    setLocation(400,400);
+	    setLocation(5,150);
 	    setVisible(true);
 	}
 

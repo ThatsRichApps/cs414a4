@@ -39,8 +39,9 @@ public class SignUI extends JFrame {
         messageLabel.setText(message);
         add(messageLabel);
        
-        setSize(200, 200);
-        setLocationRelativeTo(null);
+        setSize(150, 100);
+        setLocation(5, 5);
+        //setLocationRelativeTo(null);
         setVisible(true);
     }
 	

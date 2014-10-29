@@ -56,7 +56,8 @@ public class GarageUI extends JFrame {
         pack();
         
         setSize(300, 300);
-        setLocationRelativeTo(null);
+        setLocation(310, 150);
+        //setLocationRelativeTo(null);
         setVisible(true);
     }
 	

@@ -8,25 +8,47 @@ public class Transaction {
 	private Date timeOut;
 	private BigDecimal amount;
 	private Ticket ticket;
+	private Payment payment;
+	private boolean paid;
 	
 	public Transaction () {
 	}
 	
 	public Transaction(Ticket ticket) {
-		
 		this.ticket = ticket;
-		
 		// set timeOut to creation time
 		setTimeOut();
-	
 		// determine fees based upon ticket
 		this.amount = calculateFees();
+		this.paid = false;
+	}
+	
+	public Transaction(BigDecimal amount) {
+		// set fee explicitly
+		this.amount = amount;
+		this.paid = false;
 	}
 	
 	public BigDecimal getAmount() {
 		return amount;
 	}
 	
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public boolean isPaid() {
+		return paid;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
+	public void setPaid(boolean paid) {
+		this.paid = paid;
+	}
+
 	public Date getTimeOut() {
 		return this.timeOut;
 	}
@@ -54,6 +76,17 @@ public class Transaction {
 	
 	}
 	
+	public void createCashPayment(){
+		payment = new CashPayment(amount);
+	}
+	
+	public void createCreditPayment(){
+		payment = new CreditPayment(amount);
+	}
+	
+	public void createAccountPayment(){
+		payment = new AccountPayment(amount);
+	}
 	
 	
 }

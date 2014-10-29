@@ -33,6 +33,8 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 		// Add the ExitKiosk (this) as the Action Listener for UI Actions
 		exitUI.addTicketFieldActionListener(this);
 		exitUI.addLicenseFieldActionListener(this);
+		exitUI.addLostTicketButtonActionListener(this);
+		
 		exitUI.addPayCashButtonActionListener(this);
 		exitUI.addPayOnAccountButtonActionListener(this);
 		exitUI.addCreditCardFieldActionListener(this);
@@ -44,6 +46,8 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 		
 		// create a cash register for taking payments
 		register = new Register();
+		// pass the exitGate so that the cashier can open it too
+		register.setExitKiosk(this);
 		
 		currentTicket = null;
 		currentTransaction = null;
@@ -64,62 +68,96 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 		String message = "";
 		
 		switch (eventName) {
-		
-		case "LicenseField":
-			String licensePlate = exitUI.getLicensePlate();
-			currentTicket = garage.getTicketForLicensePlate(licensePlate);
-			message = "Fee by License: " + licensePlate;
-			break;
+
 		case "TicketField":
-			int ticketNumber = exitUI.getTicketNumber();
-			currentTicket = garage.getTicketNumber(ticketNumber);
-			message = "Fee by Ticket: " + ticketNumber;
+			lookupTicket();
+			break;
+		case "LicenseField":
+			lookupLicense();
 			break;
 		case "LostTicket":
+			currentTicket = new Ticket();  // create a dummy ticket
+			currentTransaction = new Transaction(garage.getSystemPreferences().getMaxFee());
 			break;
 		case "PayCash":
-			exitUI.enableFindTicketButtons(true);
-			exitUI.enablePaymentTickets(false);
+			exitUI.enableFindTicketButtons(false);
+			exitUI.enablePaymentFields(false);
+			currentTransaction.createCashPayment();
+			register.validatePayment(currentTransaction);
 			break;
 		case "PayOnAccount":
-			exitUI.enableFindTicketButtons(true);
-			exitUI.enablePaymentTickets(false);
+			exitUI.enableFindTicketButtons(false);
+			exitUI.enablePaymentFields(false);
+			currentTransaction.createAccountPayment();
+			register.validatePayment(currentTransaction);
 			break;
 		case "PayCreditCard":
-			exitUI.enableFindTicketButtons(true);
-			exitUI.enablePaymentTickets(false);
+			exitUI.enableFindTicketButtons(false);
+			exitUI.enablePaymentFields(false);
+			currentTransaction.createCreditPayment();
+			register.validatePayment(currentTransaction);
 			break;
 		}
+				
+	}
+
+	private void lookupTicket() {
+		
+		int ticketNumber = exitUI.getTicketNumber();
+		currentTicket = garage.getTicketNumber(ticketNumber);
 		
 		if (currentTicket == null) {
 			// handle ticket not found
 			exitUI.setMessage("Ticket Not Found");
 			exitUI.setPaymentMessage("");
 		} else {
-
-			exitUI.setMessage(message);
 			currentTransaction = new Transaction(currentTicket);
+			String message = "Fee by Ticket: " + ticketNumber;
+			exitUI.setMessage(message);
 			exitUI.setPaymentMessage("You owe: $" + currentTransaction.getAmount());
-			
+			register.setAmountDue(currentTransaction.getAmount());
+		
 			// now enable the payment buttons and disable find ticket buttons
 			exitUI.enableFindTicketButtons(false);
-			exitUI.enablePaymentTickets(true);
-			
-			register.setAmountDue(currentTransaction.getAmount());
-			
-			setChanged();
-			notifyObservers("exit");
-			
+			exitUI.enablePaymentFields(true);
 		}
 		
 	}
-
-	public void openGate() {
-		
-		exitGate.openGateForCar();
-		
+	
+	public void lookupLicense() {
+		String licensePlate = exitUI.getLicensePlate();
+		currentTicket = garage.getTicketForLicensePlate(licensePlate);
+		if (currentTicket == null) {
+			// handle ticket not found
+			exitUI.setMessage("Ticket Not Found");
+			exitUI.setPaymentMessage("");
+		} else {
+			currentTransaction = new Transaction(currentTicket);
+			String message = "Fee by License: " + licensePlate;
+			exitUI.setMessage(message);
+			exitUI.setPaymentMessage("You owe: $" + currentTransaction.getAmount());
+			register.setAmountDue(currentTransaction.getAmount());
+			
+			// now enable the payment buttons and disable find ticket buttons
+			exitUI.enableFindTicketButtons(false);
+			exitUI.enablePaymentFields(true);
+		}
 	}
 	
+	public void openGate() {
+		setChanged();
+		notifyObservers();
+		register.resetUI();
+		garage.saveTransaction(currentTransaction);
+		
+		currentTicket = null;
+		currentTransaction = null;
+		exitUI.setMessage("");
+		exitUI.setPaymentMessage("");
+		exitUI.enableFindTicketButtons(true);
+		exitUI.enablePaymentFields(false);
+		exitGate.openGateForCar();
+	}
 	
 	public void update(Observable o, Object arg) {
 

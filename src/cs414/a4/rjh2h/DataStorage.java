@@ -8,6 +8,8 @@ public class DataStorage {
 	private HashMap<String, Ticket> virtualTicketMap = new HashMap<String, Ticket>();
 	private HashMap<Integer, Ticket> physicalTicketMap = new HashMap<Integer, Ticket>();
 	private HashMap<Date, Integer> occupancyData = new HashMap<Date, Integer>();
+	private HashMap<Integer, Transaction> transactionRecords = new HashMap<Integer, Transaction>();
+	private int transactionID = 0;
 	
 	public DataStorage() {
 		
@@ -37,31 +39,36 @@ public class DataStorage {
 	}
 	
 	public void addVirtualTicket(Ticket ticket) {
-		
 		String key = ticket.getVehicle().getLicensePlate();
 		virtualTicketMap.put(key, ticket);
-		
 	}
-	
 	
 	public void addPhysicalTicket(Ticket ticket) {
-		
 		int key = ticket.getTicketNumber();
 		physicalTicketMap.put(key, ticket);
-		
 	}
 
-	public Ticket getTicketNumber (int ticketNumber) {
-		
-		return physicalTicketMap.get(ticketNumber);
-		
+	public Ticket getTicketByNumber (int ticketNumber) {
+		// lookup the ticket by number 
+		Ticket ticket = physicalTicketMap.get(ticketNumber);
+		// ticket can only be used once, so remove it
+		physicalTicketMap.remove(ticketNumber);
+		return ticket;
 	}
 
 	public Ticket getTicketForLicensePlate (String licensePlate) {
-		
-		return virtualTicketMap.get(licensePlate);
-		
+		Ticket ticket = virtualTicketMap.get(licensePlate);
+		// ticket can only be used once, so remove it
+		virtualTicketMap.remove(licensePlate);
+		return ticket;
 	}
+	
+	public void saveTransaction (Transaction transaction) {
+		// increment the transaction id and use it as a key
+		transactionID++;
+		transactionRecords.put(transactionID, transaction);
+	}
+	
 	
 	public void updateOccupancyData (Date timestamp, int occupancy) {
 		

@@ -136,7 +136,7 @@ public class ParkingGarage extends Observable implements Observer, ActionListene
 	
 	public Ticket getTicketNumber (int ticketNumber) {
 		
-		return dataStorage.getTicketNumber(ticketNumber);
+		return dataStorage.getTicketByNumber(ticketNumber);
 		
 	}
 	
@@ -145,6 +145,13 @@ public class ParkingGarage extends Observable implements Observer, ActionListene
 		return dataStorage.getTicketForLicensePlate(licensePlate);
 		
 	}
+	
+	public void saveTransaction(Transaction transaction) {
+		
+		dataStorage.saveTransaction(transaction);
+	
+	}
+	
 	
 	
 }

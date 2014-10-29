@@ -41,7 +41,7 @@ public class ExitKioskUI extends JFrame {
 	public ExitKioskUI() {
 		initUI();
 		enableFindTicketButtons(true);
-		enablePaymentTickets(false);
+		enablePaymentFields(false);
 	}
 	
     private void initUI() {
@@ -134,8 +134,8 @@ public class ExitKioskUI extends JFrame {
                 
 	    pack();
 	    //setSize(300, 300);
-        setLocationRelativeTo(null);
-        setVisible(true);
+        setLocation(615, 150);
+	    setVisible(true);
     }
     
     protected MaskFormatter createFormatter(String s) {
@@ -179,6 +179,10 @@ public class ExitKioskUI extends JFrame {
 	    licensePlateField.addActionListener(listener);
 	}
 
+	public void addLostTicketButtonActionListener(ActionListener listener) {
+	    lostTicketButton.addActionListener(listener);
+	}
+	
 	public void addCreditCardFieldActionListener(ActionListener listener) {
 	    creditCardField.addActionListener(listener);
 	}
@@ -191,7 +195,7 @@ public class ExitKioskUI extends JFrame {
 	    payOnAccountButton.addActionListener(listener);
 	}
 	
-	public void enablePaymentTickets(boolean enabled) {
+	public void enablePaymentFields(boolean enabled) {
 		creditCardField.setEnabled(enabled);
 		payCashButton.setEnabled(enabled);
 		payOnAccountButton.setEnabled(enabled);
