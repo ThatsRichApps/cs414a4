@@ -51,10 +51,8 @@ public class EntryKioskUI extends JFrame {
 	public void setGateStatus (boolean isOpen) {
 		if (isOpen) {
 			gateStatusLabel.setText("Gate is Open, wait for car entry");
-			enterButton.setEnabled(false);
 		} else {
 			gateStatusLabel.setText("Gate is Closed");
-			enterButton.setEnabled(true);
 		}
 	}
 	

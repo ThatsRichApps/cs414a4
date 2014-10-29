@@ -2,6 +2,7 @@ package cs414.a4.rjh2h.ui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,7 +17,7 @@ public class SysAdminUI extends JFrame {
 
 	private static final long serialVersionUID = -7241484193835854441L;
 	private JLabel messageLabel;
-	private JComboBox preferenceListBox;
+	private JComboBox<String> preferenceListBox;
 	private JFormattedTextField setPreferenceField;
 	private JButton setPreferenceButton;
 	private String[] listOfPreferences;
@@ -24,18 +25,20 @@ public class SysAdminUI extends JFrame {
 	public SysAdminUI() {
 		initUI();
 	}
-	
+
+	public SysAdminUI(Map<String, Object> systemPrefs) {
+		
+		listOfPreferences = systemPrefs.keySet().toArray(new String[0]);
+		preferenceListBox = new JComboBox<>(listOfPreferences);
+		initUI();
+	}
+
     private void initUI() {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("System Administration");
                 
         messageLabel =  new JLabel("System Adminstration", SwingConstants.CENTER);
-   
-        
-        String[] listOfPreferences = { "maxoccupancy", "rate", "grace period", "maxfee" };
-
-        preferenceListBox = new JComboBox<>(listOfPreferences);
-		      
+   	      
         setPreferenceField = new JFormattedTextField();
         
         setPreferenceButton = new JButton("Set Preference");        
@@ -65,8 +68,8 @@ public class SysAdminUI extends JFrame {
 		messageLabel.setText(message);
 	}
 
-
-	
-	
+	public String[] getListOfPreferences() {
+		return listOfPreferences;
+	}
 	
 }

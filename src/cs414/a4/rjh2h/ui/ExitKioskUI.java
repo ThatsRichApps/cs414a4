@@ -81,8 +81,7 @@ public class ExitKioskUI extends JFrame {
             
 			@Override
 			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-				
+				// do nothing 
 			}
         });
         
@@ -94,8 +93,20 @@ public class ExitKioskUI extends JFrame {
         
         creditCardField = new JFormattedTextField(createFormatter("#### #### #### ####"));
         creditCardField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
-        creditCardField.setActionCommand("CreditCardField");
+        creditCardField.setActionCommand("PayCreditCard");
         creditCardField.setText("1111 1111 1111 11111");
+        
+        creditCardField.addFocusListener(new FocusListener(){
+            @Override
+            public void focusGained(FocusEvent e){
+                creditCardField.setText("");
+            }
+            
+			@Override
+			public void focusLost(FocusEvent e) {
+				// do nothing 
+			}
+        });
         
         payCashButton = new JButton("Pay by Cash");
         payCashButton.setActionCommand("PayCash");
@@ -133,8 +144,7 @@ public class ExitKioskUI extends JFrame {
         getContentPane().add(pane, BorderLayout.CENTER);
                 
 	    pack();
-	    //setSize(300, 300);
-        setLocation(615, 150);
+	    setLocation(615, 150);
 	    setVisible(true);
     }
     
@@ -149,6 +159,21 @@ public class ExitKioskUI extends JFrame {
         return formatter;
     }
     
+    public String getCreditCardNumber () {
+    	return creditCardField.getText();
+    }
+    
+	public int getTicketNumber () {	
+		int ticketNumber = Integer.parseInt(enterTicketField.getText());
+		return ticketNumber;
+	}
+
+	public String getLicensePlate () {
+		String licensePlate = licensePlateField.getText();
+		return licensePlate;
+	}
+	    
+    
 	public void setMessage(String message) {
 		messageLabel.setText(message);
 	}
@@ -161,16 +186,7 @@ public class ExitKioskUI extends JFrame {
 		selectPaymentMessageLabel.setText(message);
 	}
 	
-	public int getTicketNumber () {	
-		int ticketNumber = Integer.parseInt(enterTicketField.getText());
-		return ticketNumber;
-	}
 
-	public String getLicensePlate () {
-		String licensePlate = licensePlateField.getText();
-		return licensePlate;
-	}
-	
 	public void addTicketFieldActionListener(ActionListener listener) {
 	    enterTicketField.addActionListener(listener);
 	}
@@ -204,6 +220,7 @@ public class ExitKioskUI extends JFrame {
 	public void enableFindTicketButtons(Boolean enabled) {
 		enterTicketField.setEnabled(enabled);
 		licensePlateField.setEnabled(enabled);
+		lostTicketButton.setEnabled(enabled);
 	}
 	
 	

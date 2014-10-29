@@ -63,10 +63,6 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 		
 		String eventName = event.getActionCommand();
 		
-		System.out.println("event:" + eventName);
-		
-		String message = "";
-		
 		switch (eventName) {
 
 		case "TicketField":
@@ -76,8 +72,7 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 			lookupLicense();
 			break;
 		case "LostTicket":
-			currentTicket = new Ticket();  // create a dummy ticket
-			currentTransaction = new Transaction(garage.getSystemPreferences().getMaxFee());
+			lostTicket();
 			break;
 		case "PayCash":
 			exitUI.enableFindTicketButtons(false);
@@ -94,7 +89,8 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 		case "PayCreditCard":
 			exitUI.enableFindTicketButtons(false);
 			exitUI.enablePaymentFields(false);
-			currentTransaction.createCreditPayment();
+			String creditCardNumber = exitUI.getCreditCardNumber();
+			currentTransaction.createCreditPayment(creditCardNumber);
 			register.validatePayment(currentTransaction);
 			break;
 		}
@@ -115,7 +111,7 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 			String message = "Fee by Ticket: " + ticketNumber;
 			exitUI.setMessage(message);
 			exitUI.setPaymentMessage("You owe: $" + currentTransaction.getAmount());
-			register.setAmountDue(currentTransaction.getAmount());
+			register.setCurrentTransaction(currentTransaction);
 		
 			// now enable the payment buttons and disable find ticket buttons
 			exitUI.enableFindTicketButtons(false);
@@ -124,7 +120,7 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 		
 	}
 	
-	public void lookupLicense() {
+	private void lookupLicense() {
 		String licensePlate = exitUI.getLicensePlate();
 		currentTicket = garage.getTicketForLicensePlate(licensePlate);
 		if (currentTicket == null) {
@@ -136,18 +132,31 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 			String message = "Fee by License: " + licensePlate;
 			exitUI.setMessage(message);
 			exitUI.setPaymentMessage("You owe: $" + currentTransaction.getAmount());
-			register.setAmountDue(currentTransaction.getAmount());
-			
+			register.setCurrentTransaction(currentTransaction);
+
 			// now enable the payment buttons and disable find ticket buttons
 			exitUI.enableFindTicketButtons(false);
 			exitUI.enablePaymentFields(true);
 		}
 	}
 	
+	private void lostTicket() {
+		currentTicket = new Ticket();  // create a dummy ticket
+		currentTransaction = new Transaction(garage.getSystemPreferences().getMaxFee());
+		String message = "Lost Ticket, Max Fee ";
+		exitUI.setMessage(message);
+		exitUI.setPaymentMessage("You owe: $" + currentTransaction.getAmount());
+		register.setCurrentTransaction(currentTransaction);
+
+		// now enable the payment buttons and disable find ticket buttons
+		exitUI.enableFindTicketButtons(false);
+		exitUI.enablePaymentFields(true);
+	}
+	
 	public void openGate() {
 		setChanged();
-		notifyObservers();
-		register.resetUI();
+		notifyObservers("exit");
+		//register.resetUI();
 		garage.saveTransaction(currentTransaction);
 		
 		currentTicket = null;
@@ -162,8 +171,6 @@ public class ExitKiosk extends Observable implements Observer,ActionListener {
 	public void update(Observable o, Object arg) {
 
 		// Exit observes the exit gate, waits for cars to exit
-		//System.out.println("Update called:" + o + ":" + arg);
-		
 		if (arg == "GateOpen") {
 			exitUI.setGateStatus(true);
 		} else if (arg == "GateClosed") {

@@ -57,8 +57,7 @@ public class PhysicalTicketUI extends JFrame {
         getContentPane().add(pane, BorderLayout.CENTER);
 	    
 	    pack();
-	    setSize(300, 300);
-	    setLocationRelativeTo(null);
+	    setLocation (5,460);
 	    setVisible(true);
 	}
 

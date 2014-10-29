@@ -54,7 +54,7 @@ public class ParkingGarage extends Observable implements Observer, ActionListene
 	public void setOpen(boolean isOpen) {
 		this.isOpen = isOpen;
 		setChanged();
-		notifyObservers(isOpen);
+		notifyObservers("GarageOpen");
 	}
 
 	
@@ -96,11 +96,11 @@ public class ParkingGarage extends Observable implements Observer, ActionListene
 		if (currentOccupancy >= systemPreferences.getMaxOccupancy()) {
 			this.isOpen = false;		
 			this.setChanged();
-			this.notifyObservers(this.isOpen);
+			this.notifyObservers("GarageFull");
 		} else if (this.isOpen == false) {
 			this.isOpen = true;		
 			this.setChanged();
-			this.notifyObservers(this.isOpen);
+			this.notifyObservers("GarageOpen");
 		}
 		
 	}

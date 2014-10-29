@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
-import java.text.NumberFormat;
-import java.text.ParseException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.text.MaskFormatter;
 
 public class RegisterUI extends JFrame {
 
@@ -45,7 +44,9 @@ public class RegisterUI extends JFrame {
         amountLabel = new JLabel("", SwingConstants.CENTER);
         
         cashTenderedLabel = new JLabel("Cash Tendered:", SwingConstants.CENTER);
-        enterCashTenderedField = new JFormattedTextField();
+        
+        enterCashTenderedField = new JFormattedTextField(createFormatter("###.##"));
+        enterCashTenderedField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
         enterCashTenderedField.setActionCommand("CashField");
         
 	    changeDueLabel = new JLabel("Change Due:", SwingConstants.CENTER);
@@ -98,6 +99,17 @@ public class RegisterUI extends JFrame {
         setVisible(true);
     }
     
+    protected MaskFormatter createFormatter(String s) {
+        MaskFormatter formatter = null;
+        try {
+            formatter = new MaskFormatter(s);
+        } catch (java.text.ParseException exc) {
+            System.err.println("formatter is bad: " + exc.getMessage());
+            System.exit(-1);
+        }
+        return formatter;
+    }
+    
     public void addAllActionListeners(ActionListener listener){
     	// set the controller class (Register) as the action listener
         enterCashTenderedField.addActionListener(listener);
@@ -125,6 +137,13 @@ public class RegisterUI extends JFrame {
         accountNumberLabel.setEnabled(true);
     }
     
+    public void resetUI() {
+		setAmountDue(new BigDecimal(0));
+		enterCashTenderedField.setText("");
+		changeDueLabel.setText("");
+        setAllPaymentsEnabled(false);
+    }
+    
     public void setAllPaymentsEnabled(boolean enabled) {
     	// use this to reset the ui after or before payment
     	// usually only used for enabled = false
@@ -144,12 +163,16 @@ public class RegisterUI extends JFrame {
     	
     }
     
+    public BigDecimal getCashTendered() {
+    	return (new BigDecimal(enterCashTenderedField.getText()));
+    }
+    
     public void setAmountDue(BigDecimal amount) {
 		amountLabel.setText("$" + amount.toString());
 	}
 
-	public void setChangeLabel(String changeLabel) {
-		this.changeLabel.setText(changeLabel);
+	public void setChangeLabel(BigDecimal change) {
+		this.changeLabel.setText("$" + change.toString());
 	}
 
 	public void setCreditCardLabel(String creditCardLabel) {
@@ -160,11 +183,4 @@ public class RegisterUI extends JFrame {
 		this.accountNumberLabel.setText(accountNumberLabel);
 	}
     
-    
-    
-    
-    
-    
-    
-	
 }

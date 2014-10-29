@@ -27,16 +27,20 @@ public class Sign implements Observer {
 	public void update(Observable o, Object arg) {
 	    // this updates the sign when the garage state changes
 		
-	    String garageState;
-	    boolean isOpen = (boolean) arg;
+	    String garageState = (String) arg;
+	    String message = "";
 	    
-	    if (isOpen == true) {
-	    	garageState = "Open";
-	    } else {
-	    	garageState = "Full";
+	    switch (garageState) {
+	    
+	    case ("GarageOpen"):
+	    	message = "Open";
+	    	break;
+	    case ("GarageFull"):
+	    	message = "Full";
+	    	break;
 	    }
 	    	
-	    setMessage("Garage is " + garageState);
+	    setMessage("Garage is " + message);
 	     
 	}
 	

@@ -80,8 +80,8 @@ public class Transaction {
 		payment = new CashPayment(amount);
 	}
 	
-	public void createCreditPayment(){
-		payment = new CreditPayment(amount);
+	public void createCreditPayment(String creditCardNumber){
+		payment = new CreditPayment(amount, creditCardNumber);
 	}
 	
 	public void createAccountPayment(){

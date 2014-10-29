@@ -11,6 +11,8 @@ public class DataStorage {
 	private HashMap<Integer, Transaction> transactionRecords = new HashMap<Integer, Transaction>();
 	private int transactionID = 0;
 	
+	private HashMap<String, SystemAccount> systemAccountList = new HashMap<String, SystemAccount>();
+	
 	public DataStorage() {
 		
 		// initialize any pre startup test data here
@@ -28,6 +30,14 @@ public class DataStorage {
 
 	public HashMap<Integer, Ticket> getPhysicalTicketMap() {
 		return physicalTicketMap;
+	}
+
+	public HashMap<String, SystemAccount> getSystemAccountList() {
+		return systemAccountList;
+	}
+
+	public void setSystemAccountList(HashMap<String, SystemAccount> systemAccountList) {
+		this.systemAccountList = systemAccountList;
 	}
 
 	public void setVirtualTicketMap(HashMap<String, Ticket> virtualTicketMap) {
@@ -48,6 +58,15 @@ public class DataStorage {
 		physicalTicketMap.put(key, ticket);
 	}
 
+	public void addSystemAccount(SystemAccount systemAccount) {
+		String key = systemAccount.getUsername();
+		systemAccountList.put(key, systemAccount);
+	}
+	
+	public SystemAccount getSystemAccount(String username) {
+		return systemAccountList.get(username);
+	}
+	
 	public Ticket getTicketByNumber (int ticketNumber) {
 		// lookup the ticket by number 
 		Ticket ticket = physicalTicketMap.get(ticketNumber);

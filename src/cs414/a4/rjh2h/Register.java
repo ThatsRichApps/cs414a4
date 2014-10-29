@@ -23,11 +23,42 @@ public class Register implements ActionListener {
 
 	public void setCurrentTransaction(Transaction currentTransaction) {
 		this.currentTransaction = currentTransaction;
+		registerUI.setAmountDue(currentTransaction.getAmount());
 	}
 
 	public boolean validatePayment(Transaction transaction) {
 		String paymentType = transaction.getPayment().toString();
-		return (true);
+		boolean paid = false;
+		
+		switch (paymentType) {
+		
+		case "CashPayment":
+			registerUI.setCashPayment();
+			break;
+		case "CreditPayment":
+			registerUI.setCreditPayment();
+			paid = transaction.getPayment().initiatePayment();
+			
+			registerUI.resetUI();
+			this.exitKiosk.openGate();	
+			
+			// set the cc field to the credit card
+			break;
+		case "AccountPayment":
+			registerUI.setAccountPayment();
+			paid = transaction.getPayment().initiatePayment();
+			
+			// marks a account as paid and opens gate
+			
+			registerUI.resetUI();
+			this.exitKiosk.openGate();	
+			
+			// set the account paid field to license
+			break;
+		}
+		
+		return (paid);
+	
 	}
 	
 	public void setAmountDue(BigDecimal amount) {
@@ -40,29 +71,23 @@ public class Register implements ActionListener {
 		String eventName = event.getActionCommand();
 		
 		switch (eventName) {
-
 		case "OpenGate":
+			registerUI.resetUI();
 			this.exitKiosk.openGate();	
 			break;
 		case "CashField":
 			// get cash tendered and set changeDue amount
+			BigDecimal cashTendered = registerUI.getCashTendered();
+			BigDecimal change = cashTendered.subtract(currentTransaction.getAmount());
+			registerUI.setChangeLabel(change);
 			break;
 		case "Paid":
+			// marks a cash deal as paid and opens gate
+			registerUI.resetUI();
+			this.exitKiosk.openGate();	
 			break;
-			
 		}
 		
 	}
 	
-	public void resetUI() {
-		// reset the ui after payment or no charge
-		
-	}
-	
-	
-	
-	
-	
-	
-
 }

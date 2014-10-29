@@ -54,22 +54,34 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 		
 		//System.out.println("Update called:" + o + ":" + arg);
 		
-		if (arg == "GateOpen") {
-			entryUI.setGateStatus(true);
-		} else if (arg == "GateClosed") {
-			entryUI.setGateStatus(false);
-		} else {
-		    isGarageOpen = (boolean) arg;
-		    if (isGarageOpen == true) {
-		    	entryUI.setMessage1("Press Top Button to Enter");
-		    	entryUI.setMessage2("");
-		    } else {
+		String statusMessage = (String) arg;
+		
+		switch (statusMessage) {
+			
+			case ("GarageFull"):
+				isGarageOpen = false;
 		    	entryUI.setMessage1("Garage is Full");
-		    	entryUI.setMessage2("");
-		    }
-	
-		    entryUI.enableEnterButton(isGarageOpen);
+				entryUI.setMessage2("");
+				entryUI.enableEnterButton(isGarageOpen);
+	    		break;
+			case ("GarageOpen"):
+				isGarageOpen = true;
+		    	entryUI.setMessage1("Press Top Button to Enter");
+				entryUI.setMessage2("");
+				entryUI.enableEnterButton(isGarageOpen);
+				break;
+			case ("GateOpen"):
+				entryUI.setGateStatus(true);
+				entryUI.enableEnterButton(false);
+				break;
+			case ("GateClosed"):	
+				entryUI.setGateStatus(false);
+				entryUI.enableEnterButton(false);
+				entryUI.enableEnterButton(isGarageOpen);
+				break;
+
 		}
+				
 		
 	}
 	

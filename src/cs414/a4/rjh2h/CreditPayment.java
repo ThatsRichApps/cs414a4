@@ -6,8 +6,10 @@ public class CreditPayment extends Payment {
 	
 	private CreditCard creditCard;
 	
-	public CreditPayment(BigDecimal amountDue) {
+	public CreditPayment(BigDecimal amountDue, String cardNumber) {
 		super(amountDue);
+		creditCard = new CreditCard();
+		creditCard.setCardNumber(cardNumber);
 	}
 	
 	@Override
@@ -19,7 +21,6 @@ public class CreditPayment extends Payment {
 	public boolean initiatePayment() {
 		
 		// charge card here
-		
 		if (creditCard.getCardNumber() == "1111 1111 1111 1111") {
 			// use 1111 1111 1111 1111 card to test decline
 			return (false);
