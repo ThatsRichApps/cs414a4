@@ -1,42 +1,46 @@
 package cs414.a4.rjh2h;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 import cs414.a4.rjh2h.ui.SysAdminUI;
 
-public class SystemPreferences {
+public class SystemPreferences implements ActionListener {
 
-	// initialize the system variables here
+	/*
 	private double gracePeriod;
 	private BigDecimal hourlyFee;
 	private BigDecimal maxFee;
 	private int maxOccupancy;
+	*/
 	private SysAdminUI sysAdminUI;
-
-	private Map<String, Object> systemPrefs = new HashMap<String, Object>();;
+	
+	private Map<String, Object> systemPrefs = new HashMap<String, Object>();
+	private HashMap<String, SystemAccount> systemAccountList;
 	
 	public SystemPreferences() {
 		
-		gracePeriod = 60;
-		hourlyFee = new BigDecimal("2.00");
-		maxFee = hourlyFee.multiply(new BigDecimal("24"));
-		maxOccupancy = 5;
-		
 		systemPrefs.put("rate", new BigDecimal("3.00"));
 		systemPrefs.put("maximum occupancy", 5);
-		
+		systemPrefs.put("max fee", new BigDecimal("48.00"));
+			
 	}
 	
 	public void showAdminUI() {
-		
 		sysAdminUI = new SysAdminUI(systemPrefs);
-		
+		sysAdminUI.addActionListeners(this);
+	}
+	
+	public HashMap<String, SystemAccount> getSystemAccountList() {
+		return systemAccountList;
 	}
 
-	public double getGracePeriod() {
-		return gracePeriod;
+	public void setSystemAccountList(
+		HashMap<String, SystemAccount> systemAccountList) {
+		this.systemAccountList = systemAccountList;
 	}
 
 	public BigDecimal getHourlyFee() {
@@ -44,27 +48,32 @@ public class SystemPreferences {
 	}
 
 	public BigDecimal getMaxFee() {
-		return maxFee;
+		return (BigDecimal) systemPrefs.get("max fee");
 	}
 
 	public int getMaxOccupancy() {
 		return (int) systemPrefs.get("maximum occupancy");
 	}
 
-	public void setGracePeriod(double gracePeriod) {
-		this.gracePeriod = gracePeriod;
-	}
-
-	public void setHourlyFee(BigDecimal hourlyFee) {
-		this.hourlyFee = hourlyFee;
+	public void setRate(BigDecimal rate) {
+		systemPrefs.put("rate", rate);
 	}
 
 	public void setMaxFee(BigDecimal maxFee) {
-		this.maxFee = maxFee;
+		systemPrefs.put("max fee", maxFee);
 	}
 
 	public void setMaxOccupancy(int maxOccupancy) {
-		this.maxOccupancy = maxOccupancy;
+		systemPrefs.put("maximum occupancy", maxOccupancy);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		
+		String eventName = event.getActionCommand();
+		
+		System.out.println("event:" + eventName);
+		
 	}
 	
 	

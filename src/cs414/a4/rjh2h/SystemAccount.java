@@ -4,11 +4,13 @@ public class SystemAccount {
 	
 	private String username;
 	private String password;
+	private String role;
 	
-	public SystemAccount(String username, String password) {
+	public SystemAccount(String username, String password, String role) {
 		super();
 		this.username = username;
 		this.password = password;
+		this.role = role;
 	}
 
 	public String getUsername() {
@@ -17,6 +19,14 @@ public class SystemAccount {
 
 	public String getPassword() {
 		return password;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public void setUsername(String username) {

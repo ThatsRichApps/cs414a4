@@ -2,6 +2,7 @@ package cs414.a4.rjh2h.ui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -36,10 +37,11 @@ public class SysAdminUI extends JFrame {
     private void initUI() {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("System Administration");
-                
+        
         messageLabel =  new JLabel("System Adminstration", SwingConstants.CENTER);
    	      
         setPreferenceField = new JFormattedTextField();
+        
         
         setPreferenceButton = new JButton("Set Preference");        
         
@@ -71,5 +73,23 @@ public class SysAdminUI extends JFrame {
 	public String[] getListOfPreferences() {
 		return listOfPreferences;
 	}
+	
+	public void addActionListeners(ActionListener listener) {
+		preferenceListBox.addActionListener(listener);
+		setPreferenceButton.addActionListener(listener);
+	}
+
+	public String getPreferenceListBoxSelection() {
+		return preferenceListBox.getSelectedItem().toString();
+	}
+
+	public String getPreferenceField() {
+		return setPreferenceField.getText();
+	}
+
+	public void setSetPreferenceField(String preferenceField) {
+		this.setPreferenceField.setText(preferenceField);
+	}
+	
 	
 }

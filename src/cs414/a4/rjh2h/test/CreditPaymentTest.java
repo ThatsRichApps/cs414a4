@@ -13,7 +13,7 @@ import cs414.a4.rjh2h.CreditPayment;
 public class CreditPaymentTest extends CreditPayment {
 
 	public CreditPaymentTest(BigDecimal amountDue) {
-		super(amountDue);
+		super(amountDue, null);
 	}
 
 	@Before

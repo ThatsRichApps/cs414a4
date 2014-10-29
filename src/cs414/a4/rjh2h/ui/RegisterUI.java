@@ -140,7 +140,7 @@ public class RegisterUI extends JFrame {
     public void resetUI() {
 		setAmountDue(new BigDecimal(0));
 		enterCashTenderedField.setText("");
-		changeDueLabel.setText("");
+		changeLabel.setText("");
         setAllPaymentsEnabled(false);
     }
     

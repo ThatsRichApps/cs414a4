@@ -10,6 +10,10 @@ import cs414.a4.rjh2h.SystemAccount;
 
 public class SystemAccountTest extends SystemAccount {
 
+	public SystemAccountTest(String username, String password) {
+		super(username, password);
+	}
+	
 	@Before
 	public void setUp() throws Exception {
 	}
