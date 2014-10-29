@@ -7,7 +7,7 @@ import javax.swing.SwingConstants;
 public class UsageReportsUI extends JFrame {
 
 	private static final long serialVersionUID = -4705765678072542814L;
-	private JLabel messageLabel;
+	private JLabel mainMessageLabel;
 	
 	public UsageReportsUI() {
 		initUI();
@@ -18,17 +18,17 @@ public class UsageReportsUI extends JFrame {
         
         setTitle("Usage Reports");
                 
-        messageLabel =  new JLabel("Usage Reports", SwingConstants.CENTER);
-        		
-        add(messageLabel);
+        mainMessageLabel =  new JLabel("Usage Reports", SwingConstants.CENTER);
+        	
+        add(mainMessageLabel);
        
-        setSize(200, 200);
+        setSize(400, 100);
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
-	public void setMessage(String message) {
-		messageLabel.setText(message);
+	public void setMainMessageLabel(String message) {
+		mainMessageLabel.setText(message);
 	}
 	
 }

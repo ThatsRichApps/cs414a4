@@ -23,6 +23,10 @@ public class DataStorage {
 	public String toString() {
 		return "DataStorage";
 	}
+	
+	public HashMap<Date, Integer> getOccupancyData() {
+		return occupancyData;
+	}
 
 	public HashMap<String, Ticket> getVirtualTicketMap() {
 		return virtualTicketMap;

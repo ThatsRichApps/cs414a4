@@ -10,8 +10,8 @@ import cs414.a4.rjh2h.SystemAccount;
 
 public class SystemAccountTest extends SystemAccount {
 
-	public SystemAccountTest(String username, String password) {
-		super(username, password);
+	public SystemAccountTest(String username, String password, String role) {
+		super(username, password, role);
 	}
 	
 	@Before

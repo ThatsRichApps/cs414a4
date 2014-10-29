@@ -27,7 +27,7 @@ public class SysAdminUI extends JFrame {
 		initUI();
 	}
 
-	public SysAdminUI(Map<String, Object> systemPrefs) {
+	public SysAdminUI(Map<String, String> systemPrefs) {
 		
 		listOfPreferences = systemPrefs.keySet().toArray(new String[0]);
 		preferenceListBox = new JComboBox<>(listOfPreferences);
@@ -87,9 +87,8 @@ public class SysAdminUI extends JFrame {
 		return setPreferenceField.getText();
 	}
 
-	public void setSetPreferenceField(String preferenceField) {
+	public void setPreferenceField(String preferenceField) {
 		this.setPreferenceField.setText(preferenceField);
 	}
-	
 	
 }

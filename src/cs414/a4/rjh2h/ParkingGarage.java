@@ -17,8 +17,8 @@ public class ParkingGarage extends Observable implements Observer, ActionListene
 	private int currentOccupancy;
 	private GarageUI garageUI;
 	private SystemPreferences systemPreferences;
+	@SuppressWarnings("unused")
 	private UsageReports usageReports;
-	
 	private DataStorage dataStorage;
 	
 	//private HashMap<String, Ticket> virtualTicketMap = new HashMap<String, Ticket>();
@@ -29,7 +29,7 @@ public class ParkingGarage extends Observable implements Observer, ActionListene
 		
 		// create the main gui here
 		garageUI = new GarageUI();
-		systemPreferences = new SystemPreferences();
+		systemPreferences = new SystemPreferences(this);
 		dataStorage = new DataStorage();
 
 		garageUI.addSysAdminActionListener(this);
@@ -41,6 +41,7 @@ public class ParkingGarage extends Observable implements Observer, ActionListene
 		EntryKiosk entryKiosk = new EntryKiosk(this);
 		this.addObserver(entryKiosk);
 		
+		@SuppressWarnings("unused")
 		ExitKiosk exitKiosk = new ExitKiosk(this);
 		
 		currentOccupancy = 0;
