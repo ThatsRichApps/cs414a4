@@ -13,13 +13,14 @@ import cs414.a4.rjh2h.ui.PhysicalTicketUI;
 
 public class EntryKiosk extends Observable implements Observer, ActionListener {
 
+	private static final int TICKET_LEVEL_WARNING = 10;
 	private EntryKioskUI entryUI;
 	private ParkingGarage garage;
 	private boolean isGarageOpen;
 	private Gate entryGate;
 	private Ticket currentTicket;
 	private int ticketNumber = 0; 
-	
+	private int ticketLevel = 1000;
 	
 	public EntryKiosk() {
 	
@@ -126,8 +127,15 @@ public class EntryKiosk extends Observable implements Observer, ActionListener {
 			entryUI.enableTicketButtons(false);
 			entryUI.enableEnterButton(true);
 
+			ticketLevel--;
 			@SuppressWarnings("unused")
 			PhysicalTicketUI printedTicket = new PhysicalTicketUI(currentTicket);	
+			ticketLevel--;
+
+			if (ticketLevel < TICKET_LEVEL_WARNING) {
+				// warn someone that the physical ticket level is low
+				// maybe with a notification
+			}
 			
 			// add to the list of physical tickets current out (by number)
 			garage.addPhysicalTicket(currentTicket);

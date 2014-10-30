@@ -5,13 +5,13 @@ import java.util.HashMap;
 
 public class DataStorage {
 	
-	private HashMap<String, Ticket> virtualTicketMap = new HashMap<String, Ticket>();
-	private HashMap<Integer, Ticket> physicalTicketMap = new HashMap<Integer, Ticket>();
+	private HashMap<String, Ticket> virtualTickets = new HashMap<String, Ticket>();
+	private HashMap<Integer, Ticket> physicalTickets = new HashMap<Integer, Ticket>();
 	private HashMap<Date, Integer> occupancyData = new HashMap<Date, Integer>();
 	private HashMap<Integer, Transaction> transactionRecords = new HashMap<Integer, Transaction>();
 	private int transactionID = 0;
 	
-	private HashMap<String, SystemAccount> systemAccountList = new HashMap<String, SystemAccount>();
+	private HashMap<String, SystemAccount> systemAccounts = new HashMap<String, SystemAccount>();
 	
 	public DataStorage() {
 		
@@ -29,60 +29,60 @@ public class DataStorage {
 	}
 
 	public HashMap<String, Ticket> getVirtualTicketMap() {
-		return virtualTicketMap;
+		return virtualTickets;
 	}
 
 	public HashMap<Integer, Ticket> getPhysicalTicketMap() {
-		return physicalTicketMap;
+		return physicalTickets;
 	}
 
 	public HashMap<String, SystemAccount> getSystemAccountList() {
-		return systemAccountList;
+		return systemAccounts;
 	}
 
 	public void setSystemAccountList(HashMap<String, SystemAccount> systemAccountList) {
-		this.systemAccountList = systemAccountList;
+		this.systemAccounts = systemAccountList;
 	}
 
 	public void setVirtualTicketMap(HashMap<String, Ticket> virtualTicketMap) {
-		this.virtualTicketMap = virtualTicketMap;
+		this.virtualTickets = virtualTicketMap;
 	}
 
 	public void setPhysicalTicketMap(HashMap<Integer, Ticket> physicalTicketMap) {
-		this.physicalTicketMap = physicalTicketMap;
+		this.physicalTickets = physicalTicketMap;
 	}
 	
 	public void addVirtualTicket(Ticket ticket) {
 		String key = ticket.getVehicle().getLicensePlate();
-		virtualTicketMap.put(key, ticket);
+		virtualTickets.put(key, ticket);
 	}
 	
 	public void addPhysicalTicket(Ticket ticket) {
 		int key = ticket.getTicketNumber();
-		physicalTicketMap.put(key, ticket);
+		physicalTickets.put(key, ticket);
 	}
 
 	public void addSystemAccount(SystemAccount systemAccount) {
 		String key = systemAccount.getUsername();
-		systemAccountList.put(key, systemAccount);
+		systemAccounts.put(key, systemAccount);
 	}
 	
 	public SystemAccount getSystemAccount(String username) {
-		return systemAccountList.get(username);
+		return systemAccounts.get(username);
 	}
 	
 	public Ticket getTicketByNumber (int ticketNumber) {
 		// lookup the ticket by number 
-		Ticket ticket = physicalTicketMap.get(ticketNumber);
+		Ticket ticket = physicalTickets.get(ticketNumber);
 		// ticket can only be used once, so remove it
-		physicalTicketMap.remove(ticketNumber);
+		physicalTickets.remove(ticketNumber);
 		return ticket;
 	}
 
 	public Ticket getTicketForLicensePlate (String licensePlate) {
-		Ticket ticket = virtualTicketMap.get(licensePlate);
+		Ticket ticket = virtualTickets.get(licensePlate);
 		// ticket can only be used once, so remove it
-		virtualTicketMap.remove(licensePlate);
+		virtualTickets.remove(licensePlate);
 		return ticket;
 	}
 	
