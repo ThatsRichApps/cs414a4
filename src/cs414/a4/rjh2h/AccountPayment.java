@@ -7,6 +7,9 @@ public class AccountPayment extends Payment {
 	// the car license plate is the billing account number or key
 	private String licensePlate;
 	
+	public AccountPayment() {
+	}
+	
 	public AccountPayment(BigDecimal amountDue) {
 		super(amountDue);
 	}

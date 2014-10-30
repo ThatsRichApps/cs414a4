@@ -19,8 +19,9 @@ public class UsageReportsTest extends UsageReports {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testUsageReports() {
+		UsageReports usageReportsTest = new UsageReports();
+		assertEquals("UsageReports", usageReportsTest.toString());
 	}
 
 }

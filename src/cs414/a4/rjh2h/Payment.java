@@ -7,6 +7,9 @@ public abstract class Payment {
 	protected BigDecimal amountDue;
 	
 	public abstract boolean initiatePayment();
+	
+	public Payment(){
+	}
 
 	public Payment(BigDecimal amountDue) {
 		super();

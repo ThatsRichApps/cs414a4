@@ -35,7 +35,7 @@ public class EntryKioskUI extends JFrame {
 	
 	@Override
 	public String toString() {
-		return "EntryKioskUI [title=" + title + ", message1=" + message1 + "]";
+		return "EntryKioskUI";
 	}
 
 	public void setMessage1(String message) {

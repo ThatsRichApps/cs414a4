@@ -12,12 +12,12 @@ import cs414.a4.rjh2h.AccountPayment;
 
 public class AccountPaymentTest extends AccountPayment {
 
-	public AccountPaymentTest(BigDecimal amountDue) {
-		super(amountDue);
-	}
+	private AccountPayment accountPaymentTest;
 
 	@Before
 	public void setUp() throws Exception {
+		BigDecimal amount = new BigDecimal("100.00");
+		accountPaymentTest = new AccountPayment(amount);
 	}
 
 	@After
@@ -25,8 +25,14 @@ public class AccountPaymentTest extends AccountPayment {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testAccountPayment1() {
+		assertEquals("AccountPayment", accountPaymentTest.toString());
 	}
 
+	@Test
+	public void testAccountPayment2() {
+		accountPaymentTest.setLicensePlate("CO-AAA-111");
+		assertEquals("CO-AAA-111", accountPaymentTest.getLicensePlate());
+	}
+	
 }

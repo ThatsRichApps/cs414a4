@@ -6,11 +6,19 @@ public class SystemAccount {
 	private String password;
 	private String role;
 	
+	public SystemAccount(){
+	}
+
 	public SystemAccount(String username, String password, String role) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.role = role;
+	}
+	
+	@Override
+	public String toString() {
+		return "SystemAccount";
 	}
 
 	public String getUsername() {

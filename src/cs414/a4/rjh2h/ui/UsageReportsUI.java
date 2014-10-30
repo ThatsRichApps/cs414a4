@@ -13,7 +13,12 @@ public class UsageReportsUI extends JFrame {
 		initUI();
 	}
 	
-    private void initUI() {
+    @Override
+	public String toString() {
+		return "UsageReportsUI";
+	}
+
+	private void initUI() {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
         setTitle("Usage Reports");

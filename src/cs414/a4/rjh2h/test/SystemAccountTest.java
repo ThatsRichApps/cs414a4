@@ -9,10 +9,6 @@ import org.junit.Test;
 import cs414.a4.rjh2h.SystemAccount;
 
 public class SystemAccountTest extends SystemAccount {
-
-	public SystemAccountTest(String username, String password, String role) {
-		super(username, password, role);
-	}
 	
 	@Before
 	public void setUp() throws Exception {
@@ -23,8 +19,9 @@ public class SystemAccountTest extends SystemAccount {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testSystemAccount() {
+		SystemAccount systemAccountTest = new SystemAccount();
+		assertEquals("SystemAccount", systemAccountTest.toString());
 	}
 
 }

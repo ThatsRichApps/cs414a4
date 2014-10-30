@@ -19,8 +19,9 @@ public class TransactionTest extends Transaction {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testTransaction() {
+		Transaction transactionTest = new TransactionTest();
+		assertEquals("Transaction", transactionTest.toString());
 	}
 
 }

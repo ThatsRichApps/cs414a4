@@ -10,5 +10,10 @@ public class LoginUI extends JFrame {
 	// this would be used for verifying users before 
 	// setting system preferences, viewing usage data,
 	// and opening the register
+
+	@Override
+	public String toString() {
+		return "LoginUI";
+	}
 	
 }

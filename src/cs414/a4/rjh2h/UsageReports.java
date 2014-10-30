@@ -34,6 +34,7 @@ public class UsageReports implements ActionListener {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(timeStamp);
 			
+			// eventually roll up stats by year, month, day
 			//int year = calendar.get(Calendar.YEAR);
 		    //int month = calendar.get(Calendar.MONTH);
 		    //int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -60,6 +61,11 @@ public class UsageReports implements ActionListener {
 		
 	}
 	
+	@Override
+	public String toString() {
+		return "UsageReports";
+	}
+
 	public void actionPerformed(ActionEvent event) {
 	
 	}

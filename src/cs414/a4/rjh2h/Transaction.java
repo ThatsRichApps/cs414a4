@@ -29,6 +29,11 @@ public class Transaction {
 		this.paid = false;
 	}
 	
+	@Override
+	public String toString() {
+		return "Transaction";
+	}
+
 	public BigDecimal getAmount() {
 		return amount;
 	}

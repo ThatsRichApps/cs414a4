@@ -8,28 +8,21 @@ public class SignUI extends JFrame {
 	
 	// Sign should observe ParkingGarage for changes in occupancy.
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8443698131673275729L;
 	private String title;
 	private String message;
     JLabel messageLabel = new JLabel("Welcome to the Garage", SwingConstants.CENTER);
-	
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-		messageLabel.setText(message);
-	}
 
 	public SignUI() {
 		initUI();
 	}
 	
-    private void initUI() {
+    @Override
+	public String toString() {
+		return "SignUI";
+	}
+
+	private void initUI() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         title = "Entry Sign";
         setTitle(title);
@@ -44,5 +37,14 @@ public class SignUI extends JFrame {
         //setLocationRelativeTo(null);
         setVisible(true);
     }
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+		messageLabel.setText(message);
+	}
 	
 }

@@ -6,6 +6,9 @@ public class CreditPayment extends Payment {
 	
 	private CreditCard creditCard;
 	
+	public CreditPayment(){
+	}
+	
 	public CreditPayment(BigDecimal amountDue, String cardNumber) {
 		super(amountDue);
 		creditCard = new CreditCard();

@@ -19,8 +19,9 @@ public class RegisterTest extends Register {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testRegister() {
+		Register registerTest = new Register();
+		assertEquals("Register", registerTest.toString());
 	}
 
 }

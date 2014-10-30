@@ -22,6 +22,11 @@ public class GarageUI extends JFrame {
 		initUI();
 	}
 	
+	@Override
+	public String toString() {
+		return "GarageUI";
+	}
+
 	public void setMessage(String message) {
 		messageLabel.setText(message);
 	}

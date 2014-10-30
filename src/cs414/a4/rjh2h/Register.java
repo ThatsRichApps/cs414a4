@@ -16,6 +16,11 @@ public class Register implements ActionListener {
 		registerUI = new RegisterUI();
 		registerUI.addAllActionListeners(this);
 	}
+	
+	@Override
+	public String toString() {
+		return "Register";
+	}
 
 	public void setExitKiosk(ExitKiosk exitKiosk) {
 		this.exitKiosk = exitKiosk;

@@ -48,6 +48,11 @@ public class ParkingGarage extends Observable implements Observer, ActionListene
 		
 	}
 	
+	@Override
+	public String toString() {
+		return "ParkingGarage";
+	}
+
 	public boolean isOpen() {
 		return isOpen;
 	}

@@ -8,16 +8,17 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import cs414.a4.rjh2h.CreditCard;
 import cs414.a4.rjh2h.CreditPayment;
 
 public class CreditPaymentTest extends CreditPayment {
 
-	public CreditPaymentTest(BigDecimal amountDue) {
-		super(amountDue, null);
-	}
-
+	private CreditPayment creditPaymentTest;
+	
 	@Before
 	public void setUp() throws Exception {
+		BigDecimal amount = new BigDecimal("23.00");
+		creditPaymentTest = new CreditPayment(amount, "1234 1234 1234 1234");
 	}
 
 	@After
@@ -25,8 +26,15 @@ public class CreditPaymentTest extends CreditPayment {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testCreditPayment1() {
+		assertEquals("CreditPayment", creditPaymentTest.toString());
 	}
 
+	@Test
+	public void testCreditPayment2() {
+		CreditCard testCard = new CreditCard();
+		creditPaymentTest.setCreditCard(testCard);
+		assertEquals(testCard, creditPaymentTest.getCreditCard());
+	}
+	
 }

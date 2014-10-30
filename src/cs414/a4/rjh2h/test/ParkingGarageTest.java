@@ -10,8 +10,11 @@ import cs414.a4.rjh2h.ParkingGarage;
 
 public class ParkingGarageTest extends ParkingGarage {
 
+	private ParkingGarage garageTest;
+	
 	@Before
 	public void setUp() throws Exception {
+		garageTest = new ParkingGarage();
 	}
 
 	@After
@@ -19,8 +22,8 @@ public class ParkingGarageTest extends ParkingGarage {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testParkingGarage1() {
+		assertEquals("ParkingGarage", garageTest.toString());
 	}
 
 }

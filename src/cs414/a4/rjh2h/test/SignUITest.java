@@ -6,9 +6,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import cs414.a4.rjh2h.BillingAccount;
+import cs414.a4.rjh2h.ui.SignUI;
 
-public class BillingAccountTest extends BillingAccount {
+public class SignUITest extends SignUI {
+
+	private static final long serialVersionUID = 3065290320564797754L;
 
 	@Before
 	public void setUp() throws Exception {
@@ -19,8 +21,9 @@ public class BillingAccountTest extends BillingAccount {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testSignUI() {
+		SignUI signUITest = new SignUI();
+		assertEquals("SignUI", signUITest.toString());
 	}
 
 }

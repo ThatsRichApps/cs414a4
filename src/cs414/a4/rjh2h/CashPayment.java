@@ -7,6 +7,9 @@ public class CashPayment extends Payment {
 	private BigDecimal cashTendered;
 	private BigDecimal change;
 	
+	public CashPayment(){
+	}
+	
 	public CashPayment(BigDecimal amountDue) {
 		super(amountDue);
 	}
@@ -27,7 +30,7 @@ public class CashPayment extends Payment {
 	}
 
 	public BigDecimal getChange() {
-		this.change = amountDue.subtract(cashTendered);
+		this.change = cashTendered.subtract(amountDue);
 		return change;
 	}
 

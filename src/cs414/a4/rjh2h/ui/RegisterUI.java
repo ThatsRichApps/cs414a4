@@ -36,7 +36,12 @@ public class RegisterUI extends JFrame {
     	setAllPaymentsEnabled(false);
     }
     
-    private void initUI() {
+    @Override
+	public String toString() {
+		return "RegisterUI";
+	}
+
+	private void initUI() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Cash Register");
         

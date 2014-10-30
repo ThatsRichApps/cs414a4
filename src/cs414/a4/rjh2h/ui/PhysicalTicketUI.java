@@ -17,8 +17,9 @@ public class PhysicalTicketUI extends JFrame {
 	private static final long serialVersionUID = -7528681233196221855L;
 	
 	public PhysicalTicketUI() {
-		
 	}
+	
+	
 	
 	public PhysicalTicketUI(Ticket thisTicket) {
 	
@@ -59,6 +60,13 @@ public class PhysicalTicketUI extends JFrame {
 	    pack();
 	    setLocation (5,460);
 	    setVisible(true);
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "PhysicalTicketUI";
 	}
 
 }

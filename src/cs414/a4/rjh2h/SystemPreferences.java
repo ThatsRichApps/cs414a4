@@ -18,6 +18,9 @@ public class SystemPreferences extends Observable implements ActionListener {
 	@SuppressWarnings("unused")
 	private ParkingGarage garage;
 	
+	public SystemPreferences(){
+	}
+	
 	public SystemPreferences(ParkingGarage garage) {
 		
 		// set the garage as an observer so that
@@ -32,6 +35,11 @@ public class SystemPreferences extends Observable implements ActionListener {
 			
 	}
 	
+	@Override
+	public String toString() {
+		return "SystemPreferences";
+	}
+
 	public void showAdminUI() {
 		sysAdminUI = new SysAdminUI(systemPrefs);
 		sysAdminUI.addActionListeners(this);

@@ -44,7 +44,12 @@ public class ExitKioskUI extends JFrame {
 		enablePaymentFields(false);
 	}
 	
-    private void initUI() {
+	@Override
+	public String toString() {
+		return "ExitKioskUI";
+	}
+
+	private void initUI() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Exit Kiosk");
         

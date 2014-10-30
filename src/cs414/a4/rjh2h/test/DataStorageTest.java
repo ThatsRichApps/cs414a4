@@ -25,9 +25,7 @@ public class DataStorageTest extends DataStorage {
 
 	@Test
 	public void testDataStorage1() {
-
 		assertEquals("DataStorage", dataStorage.toString());
-	
 	}
 
 	

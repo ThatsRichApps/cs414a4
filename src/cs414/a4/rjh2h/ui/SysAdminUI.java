@@ -24,17 +24,20 @@ public class SysAdminUI extends JFrame {
 	private String[] listOfPreferences;
 	
 	public SysAdminUI() {
-		initUI();
 	}
-
+	
 	public SysAdminUI(Map<String, String> systemPrefs) {
-		
 		listOfPreferences = systemPrefs.keySet().toArray(new String[0]);
 		preferenceListBox = new JComboBox<>(listOfPreferences);
 		initUI();
 	}
+	
+    @Override
+	public String toString() {
+		return "SysAdminUI";
+	}
 
-    private void initUI() {
+	private void initUI() {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("System Administration");
         
